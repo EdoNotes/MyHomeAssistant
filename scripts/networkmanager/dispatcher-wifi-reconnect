@@ -1,0 +1,18 @@
+#!/bin/bash
+# NetworkManager dispatcher: when WiFi interface goes down, try to reconnect immediately.
+# Install: sudo cp this file to /etc/NetworkManager/dispatcher.d/10-wifi-reconnect
+#          sudo chmod +x /etc/NetworkManager/dispatcher.d/10-wifi-reconnect
+# No restart needed; NM runs scripts in dispatcher.d automatically.
+
+INTERFACE="${1:-}"
+ACTION="${2:-}"
+WIFI_IF="wlp2s0"
+CONNECTION="Nots"
+
+[ "$INTERFACE" != "$WIFI_IF" ] && exit 0
+[ "$ACTION" != "down" ] && exit 0
+
+# Only reconnect on actual disconnect (down), not on pre-down etc.
+nmcli device reconnect "$WIFI_IF" 2>/dev/null || true
+nmcli connection up "$CONNECTION" 2>/dev/null || true
+exit 0

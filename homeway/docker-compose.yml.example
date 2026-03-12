@@ -1,0 +1,13 @@
+services:
+  homeway:
+    container_name: homeway
+    image: homewayio/homeway:latest
+    ports:
+      - "11027:11027"
+    environment:
+      - HOME_ASSISTANT_IP=192.168.1.230
+      - HOME_ASSISTANT_ACCESS_TOKEN=YOUR_LONG_LIVED_ACCESS_TOKEN_HERE
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+    network_mode: host

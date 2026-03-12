@@ -1,0 +1,27 @@
+{
+    "config": {
+        "error": {
+            "duplicated": "Názov by mal byť jedinečný."
+        },
+        "step": {
+            "user": {
+                "title": "Pridajte snímač denného plánu",
+                "description": "Vytvorte binárny senzor, ktorý sa zapne podľa denného plánu.",
+                "data": {
+                    "name": "Názov"
+                }
+            }
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Upraviť snímač denného plánu",
+                "description": "Upravte konfiguráciu denného plánu.",
+                "data": {
+                    "utc": "Čas UTC namiesto miestneho času (ak si nie ste istý, nepoužívajte ho)"
+                }
+            }
+        }
+    }
+}

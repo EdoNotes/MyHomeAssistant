@@ -1,0 +1,69 @@
+find_my_phone:
+  alias: Find My Phone
+  sequence:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.phone_found
+  - action: notify.mobile_app_sm_s901e
+    data:
+      message: command_volume_level
+      data:
+        command: volume_level
+        media_stream: alarm
+        level: 15
+  - repeat:
+      until:
+      - condition: state
+        entity_id: input_boolean.phone_found
+        state: 'on'
+      sequence:
+      - action: notify.mobile_app_sm_s901e
+        data:
+          message: TTS
+          data:
+            tts_text: אני כאן!!
+            language: he
+            media_stream: alarm
+      - delay: 00:00:02
+  - action: notify.mobile_app_sm_s901e
+    data:
+      message: TTS
+      data:
+        tts_text: יש ידעתי שתמצא אותי
+        language: he
+        media_stream: alarm
+find_hen_s_phone:
+  alias: Find Hen's Phone
+  sequence:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.hen_phone_found
+  - action: notify.mobile_app_sm_s918b
+    data:
+      message: command_volume_level
+      data:
+        command: volume_level
+        media_stream: alarm
+        level: 15
+  - repeat:
+      until:
+      - condition: state
+        entity_id: input_boolean.hen_phone_found
+        state: 'on'
+      sequence:
+      - action: notify.mobile_app_sm_s918b
+        data:
+          message: TTS
+          data:
+            tts_text: אני כאן!!
+            language: he
+            media_stream: alarm
+      - delay: 00:00:02
+  - action: notify.mobile_app_sm_s918b
+    data:
+      message: TTS
+      data:
+        tts_text: יש ידעתי שתמצא אותי
+        language: he
+        media_stream: alarm
+  description: ''

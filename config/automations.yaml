@@ -1,0 +1,170 @@
+- id: '1753120066897'
+  alias: Turn off Acs- nonody is home
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - zone.home
+    from: '1'
+    to: '0'
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  conditions: []
+  actions:
+  - action: climate.turn_off
+    metadata: {}
+    data: {}
+    target:
+      device_id:
+      - 789e73aca44a6794b5efe893e339c2da
+      - d5cdd682a0901f84fea76d31b2dab9d3
+      - 9cc2bf42652954d02e4aa933fc5342ab
+  mode: single
+- id: '1753191744437'
+  alias: Turn ON Center AC - Arriving Home
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - person.hen
+    - person.edonotes
+    to: home
+    from: not_home
+  conditions: []
+  actions:
+  - action: climate.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: climate.myny_mrkzy_tvrndv
+  mode: single
+- id: '1753217133431'
+  alias: Salon Off - Nightly
+  description: Turn off TV and climate control when phone is connected to charger
+    after 12:30 AM
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.edo_charger_type
+    to:
+    - ac
+    - usb
+    - wireless
+  - trigger: state
+    entity_id:
+    - sensor.edo_battery_state
+    to:
+    - charging
+  conditions:
+  - condition: time
+    after: 00:00:00
+    before: 06:00:00
+    weekday:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+  - condition: template
+    value_template: "{{ trigger.from_state.state in ['none', 'unknown', 'not_charging',
+      'discharging'] \n   or trigger.entity_id == 'sensor.sm_s901e_battery_state'
+      }}\n"
+  actions:
+  - if:
+    - condition: state
+      entity_id: media_player.samsung_cu7100_65_tv
+      state: 'on'
+    then:
+    - action: remote.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: remote.samsung_cu7100_65_tv_ue65cu7100uxsq
+    alias: Turn off tv if on
+  - alias: Turn off android streamer if on
+    if:
+    - condition: state
+      entity_id: media_player.partnertv_box_2
+      state: 'on'
+    then:
+    - action: remote.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: remote.partnertv_box
+  - alias: מזגן הורים
+    if:
+    - condition: state
+      entity_id: climate.khdr_shynh_hvrym
+      state: 'off'
+    then:
+    - action: climate.turn_on
+      metadata: {}
+      target:
+        entity_id: climate.khdr_shynh_hvrym
+      data: {}
+    - action: climate.set_temperature
+      metadata: {}
+      data:
+        temperature: 24
+      target:
+        entity_id: climate.khdr_shynh_hvrym
+    - action: climate.set_hvac_mode
+      metadata: {}
+      data:
+        hvac_mode: cool
+      target:
+        entity_id: climate.khdr_shynh_hvrym
+    enabled: false
+  - if:
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: climate.myny_mrkzy_tvrndv
+        state: 'off'
+    then:
+    - action: climate.turn_off
+      metadata: {}
+      data: {}
+      target:
+        entity_id: climate.myny_mrkzy_tvrndv
+    alias: כיבוי מיני מרכזי
+  mode: single
+- id: '1757833819795'
+  alias: Auto Update All Entities (Daily 3 AM)
+  description: Check for updates daily at 3 AM and install them automatically
+  triggers:
+  - trigger: time
+    at: 03:00:00
+  conditions: []
+  actions:
+  - repeat:
+      for_each: "{% set update_entities = states.update \n   | selectattr('state',
+        'eq', 'on') \n   | selectattr('attributes.auto_update', 'eq', false)\n   |
+        selectattr('attributes.supported_features', 'ge', 1)\n   | map(attribute='entity_id')
+        \n   | list %}\n{{ update_entities }}"
+      sequence:
+      - action: update.install
+        target:
+          entity_id: '{{ repeat.item }}'
+      - action: notify.persistent_notification
+        data:
+          title: Auto Update Complete
+          message: '{{ state_attr(repeat.item, ''friendly_name'') }} updated to {{
+            state_attr(repeat.item, ''latest_version'') }}'
+      - delay:
+          seconds: 30
+  - condition: template
+    value_template: "{% set update_entities = states.update \n   | selectattr('state',
+      'eq', 'on') \n   | selectattr('attributes.auto_update', 'eq', false)\n   | selectattr('attributes.supported_features',
+      'ge', 1)\n   | map(attribute='entity_id') \n   | list %}\n{{ update_entities
+      | length == 0 }}"
+  - action: notify.persistent_notification
+    data:
+      title: Daily Update Check Complete
+      message: No updates available at {{ now().strftime('%Y-%m-%d %H:%M') }}
+  mode: single

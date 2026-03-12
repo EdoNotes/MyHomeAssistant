@@ -1,0 +1,12 @@
+[Unit]
+Description=WiFi connectivity watchdog (ping and force reconnect)
+After=network-online.target NetworkManager.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+TimeoutStartSec=120
+ExecStart=/home/edo-notes/homeassistant/scripts/wifi-watchdog.sh
+
+[Install]
+WantedBy=multi-user.target

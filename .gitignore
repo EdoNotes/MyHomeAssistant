@@ -1,0 +1,28 @@
+# Telegram credentials (copy from telegram.env.example)
+scripts/telegram.env
+
+# Home Assistant secrets and runtime data
+config/secrets.yaml
+config/.storage/
+config/.cloud/
+config/.cache/
+config/backups/
+
+# Homeway data (logs, possibly credentials)
+homeway/data/
+
+# Local backups and logs
+config.bak/
+config.bak.*/
+*.log
+
+# Runtime database
+config/home-assistant_v2.db
+config/home-assistant_v2.db-shm
+config/home-assistant_v2.db-wal
+
+# Python caches
+__pycache__/
+
+# Homeway compose (contains access token); use homeway/docker-compose.yml.example
+homeway/docker-compose.yml
