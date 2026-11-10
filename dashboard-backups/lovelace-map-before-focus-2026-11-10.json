@@ -1,0 +1,204 @@
+{
+ "views": [
+  {
+   "title": "מפה",
+   "icon": "mdi:map",
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "/local/location_both.html?v=20260617",
+     "card_mod": {
+      "style": "ha-card { height: 75vh !important; border-radius: 18px !important; overflow: hidden !important; border: none !important; box-shadow: none !important; }"
+     }
+    },
+    {
+     "type": "horizontal-stack",
+     "cards": [
+      {
+       "type": "custom:mushroom-template-card",
+       "entity": "person.edonotes",
+       "primary": "עידו",
+       "secondary": "{% if is_state('person.edonotes','home') %}🏠 בבית{% else %}📍 בחוץ{% endif %}",
+       "picture": "{{ state_attr('person.edonotes', 'entity_picture') }}",
+       "tap_action": {
+        "action": "navigate",
+        "navigation_path": "/dashboard-map/edo"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 16px !important; background: {% if is_state('person.edonotes','home') %}rgba(76,175,80,0.12){% else %}rgba(33,150,243,0.1){% endif %} !important; border: 1px solid {% if is_state('person.edonotes','home') %}rgba(76,175,80,0.4){% else %}rgba(33,150,243,0.3){% endif %} !important; }"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "entity": "person.hen",
+       "primary": "חן",
+       "secondary": "{% if is_state('person.hen','home') %}🏠 בבית{% else %}📍 בחוץ{% endif %}",
+       "picture": "{{ state_attr('person.hen', 'entity_picture') }}",
+       "tap_action": {
+        "action": "navigate",
+        "navigation_path": "/dashboard-map/hen"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 16px !important; background: {% if is_state('person.hen','home') %}rgba(76,175,80,0.12){% else %}rgba(233,30,99,0.1){% endif %} !important; border: 1px solid {% if is_state('person.hen','home') %}rgba(76,175,80,0.4){% else %}rgba(233,30,99,0.3){% endif %} !important; }"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "עידו",
+   "icon": "mdi:account",
+   "path": "edo",
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "cards": [
+    {
+     "type": "custom:mushroom-template-card",
+     "entity": "person.edonotes",
+     "primary": "עידו",
+     "multiline_secondary": true,
+     "secondary": "{% if is_state('person.edonotes','home') %}🏠 בבית{% else %}📍 בחוץ{% endif %}",
+     "picture": "{{ state_attr('person.edonotes', 'entity_picture') }}",
+     "card_mod": {
+      "style": "ha-card { border-radius: 18px !important; background: {% if is_state('person.edonotes','home') %}rgba(76,175,80,0.12){% else %}rgba(33,150,243,0.1){% endif %} !important; border: 1px solid {% if is_state('person.edonotes','home') %}rgba(76,175,80,0.4){% else %}rgba(33,150,243,0.3){% endif %} !important; }"
+     }
+    },
+    {
+     "type": "iframe",
+     "url": "/local/location_edo.html?v=20260616",
+     "card_mod": {
+      "style": "ha-card { height: 75vh !important; border-radius: 18px !important; overflow: hidden !important; border: none !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "מיקום",
+     "secondary": "{% set address = states('sensor.sm_s942b_geocoded_location') %}{% if address not in ['unknown','unavailable','none',none,''] %}{{ address }}{% elif is_state('person.edonotes','home') %}בבית{% else %}מיקום לא ידוע{% endif %}",
+     "icon": "mdi:map-marker",
+     "icon_color": "blue",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "מרחק מהבית",
+     "secondary": "{% set dist_m = states('sensor.byt_edonotes_distance') | int(0) %}{% set dir = states('sensor.byt_edonotes_direction_of_travel') %}{{ (dist_m / 1000) | round(1) }} ק\"מ{% if dir == 'towards' %} · ↓ מתקרב{% elif dir == 'away_from' %} · ↑ מתרחק{% endif %}",
+     "icon": "mdi:home-map-marker",
+     "icon_color": "green",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "סוללה",
+     "secondary": "{% set bat = states('sensor.sm_s942b_battery_level') | int(0) %}{% set state = states('sensor.sm_s942b_battery_state') %}{{ bat }}%{% if state == 'charging' %} ⚡ טוען{% elif bat < 20 %} 🪫 נמוכה{% endif %}",
+     "icon": "mdi:battery",
+     "icon_color": "{% set bat = states('sensor.sm_s942b_battery_level') | int(0) %}{% if bat < 20 %}red{% elif bat < 50 %}orange{% else %}green{% endif %}",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "פעילות",
+     "secondary": "{% set a = states('sensor.sm_s942b_detected_activity') %}{% if a == 'in_vehicle' %}🚗 נוסע{% elif a == 'walking' %}🚶 הולך{% elif a == 'on_bicycle' %}🚴 רוכב{% elif a == 'running' %}🏃 רץ{% elif a == 'still' %}⏸ עומד{% else %}לא ידוע{% endif %}",
+     "icon": "mdi:run",
+     "icon_color": "indigo",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "עדכון אחרון",
+     "secondary": "{% set mins = ((as_timestamp(now()) - as_timestamp(states.person.edonotes.last_changed)) / 60) | int %}{% if mins < 60 %}לפני {{ mins }} דק'{% elif mins < 1440 %}לפני {{ (mins/60)|round(0)|int }} שע'{% else %}לפני {{ (mins/1440)|round(0)|int }} ימים{% endif %}",
+     "icon": "mdi:clock-outline",
+     "icon_color": "grey",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    }
+   ]
+  },
+  {
+   "title": "חן",
+   "icon": "mdi:account",
+   "path": "hen",
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "cards": [
+    {
+     "type": "custom:mushroom-template-card",
+     "entity": "person.hen",
+     "primary": "חן",
+     "secondary": "{% if is_state('person.hen','home') %}🏠 בבית{% else %}📍 בחוץ{% endif %}",
+     "picture": "{{ state_attr('person.hen', 'entity_picture') }}",
+     "card_mod": {
+      "style": "ha-card { border-radius: 18px !important; background: {% if is_state('person.hen','home') %}rgba(76,175,80,0.12){% else %}rgba(233,30,99,0.1){% endif %} !important; border: 1px solid {% if is_state('person.hen','home') %}rgba(76,175,80,0.4){% else %}rgba(233,30,99,0.3){% endif %} !important; }"
+     }
+    },
+    {
+     "type": "iframe",
+     "url": "/local/location_hen.html?v=20260616",
+     "card_mod": {
+      "style": "ha-card { height: 75vh !important; border-radius: 18px !important; overflow: hidden !important; border: none !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "מרחק מהבית",
+     "secondary": "{% set dist_m = states('sensor.byt_hen_s_phone_distance') | int(0) %}{% set dir = states('sensor.byt_hen_s_phone_direction_of_travel') %}{{ (dist_m / 1000) | round(1) }} ק\"מ{% if dir == 'towards' %} · ↓ מתקרבת{% elif dir == 'away_from' %} · ↑ מתרחקת{% endif %}",
+     "icon": "mdi:home-map-marker",
+     "icon_color": "green",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "סוללה",
+     "secondary": "{% set bat = states('sensor.sm_s918b_battery_level') | int(0) %}{% set state = states('sensor.sm_s918b_battery_state') %}{{ bat }}%{% if state == 'charging' %} ⚡ טוענת{% elif bat < 20 %} 🪫 נמוכה{% endif %}",
+     "icon": "mdi:battery",
+     "icon_color": "{% set bat = states('sensor.sm_s918b_battery_level') | int(0) %}{% if bat < 20 %}red{% elif bat < 50 %}orange{% else %}green{% endif %}",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "צעדים היום",
+     "secondary": "{{ states('sensor.sm_s918b_daily_steps') | int(0) }} צעדים",
+     "icon": "mdi:walk",
+     "icon_color": "teal",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "עדכון אחרון",
+     "secondary": "{% set mins = ((as_timestamp(now()) - as_timestamp(states.person.hen.last_changed)) / 60) | int %}{% if mins < 60 %}לפני {{ mins }} דק'{% elif mins < 1440 %}לפני {{ (mins/60)|round(0)|int }} שע'{% else %}לפני {{ (mins/1440)|round(0)|int }} ימים{% endif %}",
+     "icon": "mdi:clock-outline",
+     "icon_color": "grey",
+     "card_mod": {
+      "style": "ha-card { border-radius: 16px !important; }"
+     }
+    }
+   ]
+  }
+ ]
+}

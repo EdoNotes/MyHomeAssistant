@@ -1,0 +1,117 @@
+{
+ "views": [
+  {
+   "title": "מפה",
+   "path": "both",
+   "icon": "mdi:map",
+   "type": "panel",
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "/local/map_focus.html?v=20261110a&p=both",
+     "aspect_ratio": "100%",
+     "card_mod": {
+      "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
+     }
+    }
+   ]
+  },
+  {
+   "title": "עידו",
+   "path": "edo",
+   "icon": "mdi:account",
+   "type": "panel",
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "/local/map_focus.html?v=20261110a&p=edo",
+     "aspect_ratio": "100%",
+     "card_mod": {
+      "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
+     }
+    }
+   ],
+   "subview": true,
+   "back_path": "/dashboard-map/both"
+  },
+  {
+   "title": "חן",
+   "path": "hen",
+   "icon": "mdi:account-outline",
+   "type": "panel",
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "/local/map_focus.html?v=20261110a&p=hen",
+     "aspect_ratio": "100%",
+     "card_mod": {
+      "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
+     }
+    }
+   ],
+   "subview": true,
+   "back_path": "/dashboard-map/both"
+  },
+  {
+   "title": "ציר היום · עידו",
+   "path": "edo-day",
+   "icon": "mdi:timeline-clock-outline",
+   "type": "panel",
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "/local/map_focus.html?v=20261110a&p=edo-day",
+     "aspect_ratio": "100%",
+     "card_mod": {
+      "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
+     }
+    }
+   ],
+   "subview": true,
+   "back_path": "/dashboard-map/edo"
+  },
+  {
+   "title": "ציר היום · חן",
+   "path": "hen-day",
+   "icon": "mdi:timeline-clock-outline",
+   "type": "panel",
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "/local/map_focus.html?v=20261110a&p=hen-day",
+     "aspect_ratio": "100%",
+     "card_mod": {
+      "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
+     }
+    }
+   ],
+   "subview": true,
+   "back_path": "/dashboard-map/hen"
+  }
+ ]
+}
