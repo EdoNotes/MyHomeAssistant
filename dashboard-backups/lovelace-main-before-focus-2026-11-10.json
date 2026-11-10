@@ -1,0 +1,1395 @@
+{
+ "homeassistant": {
+  "backup": null
+ },
+ "panel_iframe": {
+  "car_management": {
+   "title": "ניהול רכבים",
+   "icon": "mdi:car",
+   "url": "http://localhost:8000",
+   "require_admin": false
+  }
+ },
+ "sensor": [
+  {
+   "platform": "file",
+   "name": "Home Assistant Update Log",
+   "file_path": "/config/docker-auto-update.log",
+   "scan_interval": 600
+  }
+ ],
+ "views": [
+  {
+   "title": "בית",
+   "path": "home",
+   "icon": "mdi:home",
+   "cards": [
+    {
+     "type": "horizontal-stack",
+     "cards": [
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "דוד",
+       "secondary": "{% if is_state('switch.notes_boiler', 'on') %}\n  פועל - {{ states('sensor.notes_boiler_remaining_time') }} דק'\n{% else %}\n  כבוי\n{% endif %}",
+       "icon": "mdi:water-boiler",
+       "tap_action": {
+        "action": "call-service",
+        "service": "switch.toggle",
+        "target": {
+         "entity_id": "switch.notes_boiler"
+        }
+       },
+       "color": "{{ 'blue' if is_state('switch.notes_boiler', 'on') else 'grey' }}",
+       "features_position": "bottom"
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "מוניטור",
+       "secondary": "{% if is_state('switch.baby_monitor_socket_1', 'on') %}\n  פועל \n{% else %}\n  כבוי\n{% endif %}",
+       "icon": "mdi:teddy-bear",
+       "tap_action": {
+        "action": "call-service",
+        "service": "switch.toggle",
+        "target": {
+         "entity_id": "switch.baby_monitor_socket_1"
+        }
+       },
+       "color": "{{ 'blue' if is_state('switch.baby_monitor_socket_1', 'on') else 'grey' }}",
+       "features_position": "bottom"
+      }
+     ]
+    },
+    {
+     "type": "vertical-stack",
+     "cards": [
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "center",
+       "chips": [
+        {
+         "type": "template",
+         "icon": "mdi:bed",
+         "content": "הורים",
+         "icon_color": "{{ 'blue' if is_state('input_select.thermostat_tab', 'חדר הורים') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.thermostat_tab"
+          },
+          "data": {
+           "option": "חדר הורים"
+          }
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:baby-carriage",
+         "content": "ילדים",
+         "icon_color": "{{ 'blue' if is_state('input_select.thermostat_tab', 'חדר ילדים') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.thermostat_tab"
+          },
+          "data": {
+           "option": "חדר ילדים"
+          }
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:hvac",
+         "content": "מרכזי",
+         "icon_color": "{{ 'blue' if is_state('input_select.thermostat_tab', 'מרכזי') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.thermostat_tab"
+          },
+          "data": {
+           "option": "מרכזי"
+          }
+         }
+        }
+       ]
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "חדר הורים"
+        }
+       ],
+       "card": {
+        "type": "vertical-stack",
+        "cards": [
+         {
+          "type": "tile",
+          "entity": "climate.khdr_shynh_hvrym",
+          "name": "חדר שינה הורים",
+          "icon": "mdi:bed",
+          "vertical": false,
+          "features_position": "bottom",
+          "features": [
+           {
+            "type": "target-temperature"
+           },
+           {
+            "type": "climate-hvac-modes",
+            "hvac_modes": [
+             "off",
+             "heat",
+             "cool",
+             "auto",
+             "dry",
+             "fan_only"
+            ],
+            "style": "icons"
+           }
+          ]
+         },
+         {
+          "type": "custom:mushroom-chips-card",
+          "alignment": "center",
+          "chips": [
+           {
+            "type": "template",
+            "icon": "mdi:autorenew",
+            "content": "Auto",
+            "icon_color": "{{ 'blue' if state_attr('climate.khdr_shynh_hvrym', 'fan_mode') == 'auto' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.khdr_shynh_hvrym"
+             },
+             "data": {
+              "fan_mode": "auto"
+             }
+            }
+           },
+           {
+            "type": "template",
+            "icon": "mdi:weather-windy-variant",
+            "content": "Low",
+            "icon_color": "{{ 'blue' if state_attr('climate.khdr_shynh_hvrym', 'fan_mode') == 'low' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.khdr_shynh_hvrym"
+             },
+             "data": {
+              "fan_mode": "low"
+             }
+            }
+           },
+           {
+            "type": "template",
+            "icon": "mdi:fan",
+            "content": "Med",
+            "icon_color": "{{ 'blue' if state_attr('climate.khdr_shynh_hvrym', 'fan_mode') == 'medium' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.khdr_shynh_hvrym"
+             },
+             "data": {
+              "fan_mode": "medium"
+             }
+            }
+           },
+           {
+            "type": "template",
+            "icon": "mdi:weather-windy",
+            "content": "High",
+            "icon_color": "{{ 'blue' if state_attr('climate.khdr_shynh_hvrym', 'fan_mode') == 'high' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.khdr_shynh_hvrym"
+             },
+             "data": {
+              "fan_mode": "high"
+             }
+            }
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "חדר ילדים"
+        }
+       ],
+       "card": {
+        "type": "vertical-stack",
+        "cards": [
+         {
+          "type": "tile",
+          "entity": "climate.mzgn_khdr_yldym",
+          "name": "מזגן חדר ילדים",
+          "icon": "mdi:baby-carriage",
+          "vertical": false,
+          "features_position": "bottom",
+          "features": [
+           {
+            "type": "target-temperature"
+           },
+           {
+            "type": "climate-hvac-modes",
+            "hvac_modes": [
+             "off",
+             "heat",
+             "cool",
+             "auto",
+             "dry",
+             "fan_only"
+            ],
+            "style": "icons"
+           }
+          ]
+         },
+         {
+          "type": "custom:mushroom-chips-card",
+          "alignment": "center",
+          "chips": [
+           {
+            "type": "template",
+            "icon": "mdi:autorenew",
+            "content": "Auto",
+            "icon_color": "{{ 'blue' if state_attr('climate.mzgn_khdr_yldym', 'fan_mode') == 'auto' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.mzgn_khdr_yldym"
+             },
+             "data": {
+              "fan_mode": "auto"
+             }
+            }
+           },
+           {
+            "type": "template",
+            "icon": "mdi:weather-windy-variant",
+            "content": "Low",
+            "icon_color": "{{ 'blue' if state_attr('climate.mzgn_khdr_yldym', 'fan_mode') == 'low' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.mzgn_khdr_yldym"
+             },
+             "data": {
+              "fan_mode": "low"
+             }
+            }
+           },
+           {
+            "type": "template",
+            "icon": "mdi:fan",
+            "content": "Med",
+            "icon_color": "{{ 'blue' if state_attr('climate.mzgn_khdr_yldym', 'fan_mode') == 'medium' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.mzgn_khdr_yldym"
+             },
+             "data": {
+              "fan_mode": "medium"
+             }
+            }
+           },
+           {
+            "type": "template",
+            "icon": "mdi:weather-windy",
+            "content": "High",
+            "icon_color": "{{ 'blue' if state_attr('climate.mzgn_khdr_yldym', 'fan_mode') == 'high' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.mzgn_khdr_yldym"
+             },
+             "data": {
+              "fan_mode": "high"
+             }
+            }
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "מרכזי"
+        }
+       ],
+       "card": {
+        "type": "vertical-stack",
+        "cards": [
+         {
+          "type": "tile",
+          "entity": "climate.myny_mrkzy_tvrndv",
+          "name": "מיני מרכזי טורנדו ⚡",
+          "icon": "mdi:hvac",
+          "vertical": false,
+          "features_position": "bottom",
+          "features": [
+           {
+            "type": "target-temperature"
+           },
+           {
+            "type": "climate-hvac-modes",
+            "hvac_modes": [
+             "off",
+             "heat",
+             "cool",
+             "heat_cool",
+             "dry",
+             "fan_only"
+            ],
+            "style": "icons"
+           }
+          ]
+         },
+         {
+          "type": "custom:mushroom-chips-card",
+          "alignment": "center",
+          "chips": [
+           {
+            "type": "template",
+            "icon": "mdi:autorenew",
+            "content": "Auto",
+            "icon_color": "{{ 'blue' if state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode') == 'auto' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.myny_mrkzy_tvrndv"
+             },
+             "data": {
+              "fan_mode": "auto"
+             }
+            }
+           },
+           {
+            "type": "template",
+            "icon": "mdi:weather-windy-variant",
+            "content": "Low",
+            "icon_color": "{{ 'blue' if state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode') == 'low' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.myny_mrkzy_tvrndv"
+             },
+             "data": {
+              "fan_mode": "low"
+             }
+            }
+           },
+           {
+            "type": "template",
+            "icon": "mdi:weather-windy",
+            "content": "High",
+            "icon_color": "{{ 'blue' if state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode') == 'high' else 'disabled' }}",
+            "tap_action": {
+             "action": "call-service",
+             "service": "climate.set_fan_mode",
+             "target": {
+              "entity_id": "climate.myny_mrkzy_tvrndv"
+             },
+             "data": {
+              "fan_mode": "high"
+             }
+            }
+           }
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "שואב",
+   "path": "vacuum",
+   "icon": "mdi:robot-vacuum",
+   "cards": [
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "Saros 20 · {{ states('sensor.saros_20_complete_status') }}",
+     "secondary": "סוללה: {{ states('sensor.saros_20_complete_battery') }}%{% if is_state('binary_sensor.saros_20_complete_dock_mop_drying', 'on') %} · מייבש מגב {{ states('sensor.saros_20_complete_dock_mop_drying_remaining_time') | round(0) }} דק'{% endif %}",
+     "icon": "mdi:robot-vacuum",
+     "icon_color": "{% if is_state('binary_sensor.saros_20_complete_cleaning', 'on') %}\n  green\n{% elif is_state('binary_sensor.saros_20_complete_charging', 'on') %}\n  blue\n{% else %}\n  grey\n{% endif %}",
+     "fill_container": true,
+     "tap_action": {
+      "action": "more-info",
+      "entity": "vacuum.saros_20_complete"
+     }
+    },
+    {
+     "type": "conditional",
+     "conditions": [
+      {
+       "entity": "vacuum.saros_20_complete",
+       "state": "cleaning"
+      }
+     ],
+     "card": {
+      "type": "custom:vacuum-card",
+      "entity": "vacuum.saros_20_complete",
+      "map": "image.slvn_saros_20_complete_map_1",
+      "map_refresh": 2,
+      "show_name": true,
+      "show_status": true,
+      "show_toolbar": true,
+      "compact_view": false,
+      "stats": {
+       "default": [
+        {
+         "attribute": "battery_level",
+         "unit": "%",
+         "subtitle": "Battery"
+        }
+       ],
+       "cleaning": [
+        {
+         "entity": "sensor.saros_20_complete_cleaning_area",
+         "unit": "מ״ר",
+         "subtitle": "שטח"
+        },
+        {
+         "entity": "sensor.saros_20_complete_cleaning_time",
+         "unit": "דק׳",
+         "subtitle": "זמן"
+        },
+        {
+         "entity": "sensor.saros_20_complete_current_room",
+         "subtitle": "חדר"
+        }
+       ]
+      },
+      "shortcuts": [
+       {
+        "name": "Send to Base",
+        "service": "vacuum.return_to_base",
+        "service_data": {
+         "entity_id": "vacuum.saros_20_complete"
+        },
+        "icon": "mdi:home"
+       }
+      ]
+     }
+    },
+    {
+     "type": "conditional",
+     "conditions": [
+      {
+       "entity": "vacuum.saros_20_complete",
+       "state_not": "cleaning"
+      }
+     ],
+     "card": {
+      "type": "custom:vacuum-card",
+      "entity": "vacuum.saros_20_complete",
+      "show_name": true,
+      "show_status": true,
+      "show_toolbar": true,
+      "compact_view": false,
+      "stats": {
+       "default": [
+        {
+         "attribute": "battery_level",
+         "unit": "%",
+         "subtitle": "Battery"
+        },
+        {
+         "entity": "sensor.saros_20_complete_total_cleaning_count",
+         "subtitle": "ניקויים"
+        }
+       ]
+      },
+      "shortcuts": [
+       {
+        "name": "Send to Base",
+        "service": "vacuum.return_to_base",
+        "service_data": {
+         "entity_id": "vacuum.saros_20_complete"
+        },
+        "icon": "mdi:home"
+       }
+      ]
+     }
+    },
+    {
+     "type": "horizontal-stack",
+     "cards": [
+      {
+       "type": "tile",
+       "entity": "select.saros_20_complete_cleaning_mode",
+       "name": "עוצמת שאיבה",
+       "icon": "mdi:fan",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "select-options"
+        }
+       ]
+      },
+      {
+       "type": "tile",
+       "entity": "select.saros_20_complete_mop_intensity",
+       "name": "עוצמת שטיפה",
+       "icon": "mdi:water-percent",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "select-options"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "tile",
+     "entity": "select.saros_20_complete_selected_map",
+     "name": "מפה נבחרת",
+     "icon": "mdi:map",
+     "features_position": "bottom",
+     "features": [
+      {
+       "type": "select-options"
+      }
+     ]
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "F25 Ace Combo · {% if states('sensor.roborock_f25_ace_combo_status') in ['unavailable', 'unknown'] %}לא מחובר{% else %}{{ states('sensor.roborock_f25_ace_combo_status') }}{% endif %}",
+     "secondary": "{% set b = states('sensor.roborock_f25_ace_combo_battery') %}{% if b in ['unavailable', 'unknown'] %}—{% else %}סוללה: {{ b }}%{% endif %}",
+     "icon": "mdi:vacuum",
+     "icon_color": "{% if states('sensor.roborock_f25_ace_combo_status') in ['unavailable', 'unknown'] %}grey{% elif is_state('sensor.roborock_f25_ace_combo_error', 'none') %}green{% else %}red{% endif %}",
+     "fill_container": true,
+     "tap_action": {
+      "action": "more-info",
+      "entity": "sensor.roborock_f25_ace_combo_status"
+     }
+    }
+   ]
+  },
+  {
+   "title": "טלוויזיה",
+   "path": "tv",
+   "icon": "mdi:television",
+   "cards": [
+    {
+     "type": "horizontal-stack",
+     "cards": [
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "Samsung TV",
+       "secondary": "{{ 'Active' if is_state('input_boolean.tv_device_mode', 'off') else 'Inactive' }}",
+       "icon": "mdi:television",
+       "icon_color": "{{ 'blue' if is_state('input_boolean.tv_device_mode', 'off') else 'grey' }}",
+       "fill_container": true,
+       "tap_action": {
+        "action": "call-service",
+        "service": "input_boolean.turn_off",
+        "target": {
+         "entity_id": "input_boolean.tv_device_mode"
+        }
+       },
+       "card_mod": {
+        "style": "ha-card {\n  background: {{ 'rgba(33, 150, 243, 0.1)' if is_state('input_boolean.tv_device_mode', 'off') else 'rgba(40, 40, 40, 0.9)' }};\n  border: {{ '2px solid rgb(33, 150, 243)' if is_state('input_boolean.tv_device_mode', 'off') else '1px solid #444' }};\n}\n"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "Android TV",
+       "secondary": "{{ 'Active' if is_state('input_boolean.tv_device_mode', 'on') else 'Inactive' }}",
+       "icon": "mdi:android",
+       "icon_color": "{{ 'green' if is_state('input_boolean.tv_device_mode', 'on') else 'grey' }}",
+       "fill_container": true,
+       "tap_action": {
+        "action": "call-service",
+        "service": "input_boolean.turn_on",
+        "target": {
+         "entity_id": "input_boolean.tv_device_mode"
+        }
+       },
+       "card_mod": {
+        "style": "ha-card {\n  background: {{ 'rgba(76, 175, 80, 0.1)' if is_state('input_boolean.tv_device_mode', 'on') else 'rgba(40, 40, 40, 0.9)' }};\n  border: {{ '2px solid rgb(76, 175, 80)' if is_state('input_boolean.tv_device_mode', 'on') else '1px solid #444' }};\n}\n"
+       }
+      }
+     ]
+    },
+    {
+     "type": "horizontal-stack",
+     "cards": [
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "TouchPad",
+       "secondary": "{{ 'Active' if is_state('input_boolean.tv_navigation_mode', 'off') else 'Inactive' }}",
+       "icon": "mdi:gesture-swipe",
+       "icon_color": "{{ 'orange' if is_state('input_boolean.tv_navigation_mode', 'off') else 'grey' }}",
+       "fill_container": true,
+       "tap_action": {
+        "action": "call-service",
+        "service": "input_boolean.turn_off",
+        "target": {
+         "entity_id": "input_boolean.tv_navigation_mode"
+        }
+       },
+       "card_mod": {
+        "style": "ha-card {\n  background: {{ 'rgba(255, 152, 0, 0.1)' if is_state('input_boolean.tv_navigation_mode', 'off') else 'rgba(40, 40, 40, 0.9)' }};\n  border: {{ '2px solid rgb(255, 152, 0)' if is_state('input_boolean.tv_navigation_mode', 'off') else '1px solid #444' }};\n}\n"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "Arrows",
+       "secondary": "{{ 'Active' if is_state('input_boolean.tv_navigation_mode', 'on') else 'Inactive' }}",
+       "icon": "mdi:arrow-all",
+       "icon_color": "{{ 'purple' if is_state('input_boolean.tv_navigation_mode', 'on') else 'grey' }}",
+       "fill_container": true,
+       "tap_action": {
+        "action": "call-service",
+        "service": "input_boolean.turn_on",
+        "target": {
+         "entity_id": "input_boolean.tv_navigation_mode"
+        }
+       },
+       "card_mod": {
+        "style": "ha-card {\n  background: {{ 'rgba(156, 39, 176, 0.1)' if is_state('input_boolean.tv_navigation_mode', 'on') else 'rgba(40, 40, 40, 0.9)' }};\n  border: {{ '2px solid rgb(156, 39, 176)' if is_state('input_boolean.tv_navigation_mode', 'on') else '1px solid #444' }};\n}\n"
+       }
+      }
+     ]
+    },
+    {
+     "type": "conditional",
+     "conditions": [
+      {
+       "entity": "input_boolean.tv_device_mode",
+       "state": "off"
+      },
+      {
+       "entity": "input_boolean.tv_navigation_mode",
+       "state": "on"
+      }
+     ],
+     "card": {
+      "type": "custom:universal-remote-card",
+      "rows": [
+       [
+        "back",
+        "power",
+        "home"
+       ],
+       [
+        "volume_down",
+        "slider",
+        "volume_up"
+       ],
+       [
+        null,
+        "up",
+        null
+       ],
+       [
+        "left",
+        "center",
+        "right"
+       ],
+       [
+        null,
+        "down",
+        null
+       ],
+       [
+        "previous",
+        "play_pause",
+        "next"
+       ],
+       [
+        "netflix",
+        "disney",
+        "numbers"
+       ]
+      ],
+      "platform": "Samsung TV",
+      "custom_actions": [
+       {
+        "name": "back",
+        "icon": "mdi:arrow-left-top",
+        "tap_action": {
+         "action": "call-service",
+         "service": "remote.send_command",
+         "target": {
+          "entity_id": "remote.samsung_cu7100_65_tv"
+         },
+         "data": {
+          "command": "KEY_RETURN"
+         }
+        }
+       },
+       {
+        "name": "netflix",
+        "icon": "mdi:netflix",
+        "tap_action": {
+         "action": "call-service",
+         "service": "media_player.select_source",
+         "target": {
+          "entity_id": "media_player.samsung_cu7100_65_tv_3"
+         },
+         "data": {
+          "source": "Netflix"
+         }
+        }
+       },
+       {
+        "name": "disney",
+        "icon": "mdi:castle",
+        "tap_action": {
+         "action": "call-service",
+         "service": "media_player.select_source",
+         "target": {
+          "entity_id": "media_player.samsung_cu7100_65_tv_3"
+         },
+         "data": {
+          "source": "Disney+"
+         }
+        }
+       },
+       {
+        "name": "numbers",
+        "icon": "mdi:dialpad",
+        "tap_action": {
+         "action": "fire-dom-event",
+         "browser_mod": {
+          "service": "browser_mod.popup",
+          "data": {
+           "title": "מספרים",
+           "size": "normal",
+           "content": {
+            "type": "custom:universal-remote-card",
+            "platform": "Samsung TV",
+            "remote_id": "remote.samsung_cu7100_65_tv",
+            "media_player_id": "media_player.samsung_cu7100_65_tv_3",
+            "haptics": true,
+            "custom_actions": [],
+            "rows": [
+             [
+              "n7",
+              "n8",
+              "n9"
+             ],
+             [
+              "n4",
+              "n5",
+              "n6"
+             ],
+             [
+              "n1",
+              "n2",
+              "n3"
+             ],
+             [
+              null,
+              "n0",
+              null
+             ]
+            ]
+           }
+          }
+         }
+        }
+       }
+      ],
+      "remote_id": "remote.samsung_cu7100_65_tv",
+      "media_player_id": "media_player.samsung_cu7100_65_tv_3",
+      "haptics": true
+     }
+    },
+    {
+     "type": "conditional",
+     "conditions": [
+      {
+       "entity": "input_boolean.tv_device_mode",
+       "state": "off"
+      },
+      {
+       "entity": "input_boolean.tv_navigation_mode",
+       "state": "off"
+      }
+     ],
+     "card": {
+      "type": "custom:universal-remote-card",
+      "rows": [
+       [
+        "back",
+        "power",
+        "home"
+       ],
+       [
+        "volume_down",
+        "slider",
+        "volume_up"
+       ],
+       [
+        "touchpad"
+       ],
+       [
+        "previous",
+        "play_pause",
+        "next"
+       ],
+       [
+        "netflix",
+        "disney",
+        "numbers"
+       ]
+      ],
+      "platform": "Samsung TV",
+      "custom_actions": [
+       {
+        "name": "back",
+        "icon": "mdi:arrow-left-top",
+        "tap_action": {
+         "action": "call-service",
+         "service": "remote.send_command",
+         "target": {
+          "entity_id": "remote.samsung_cu7100_65_tv"
+         },
+         "data": {
+          "command": "KEY_RETURN"
+         }
+        }
+       },
+       {
+        "name": "netflix",
+        "icon": "mdi:netflix",
+        "tap_action": {
+         "action": "call-service",
+         "service": "media_player.select_source",
+         "target": {
+          "entity_id": "media_player.samsung_cu7100_65_tv_3"
+         },
+         "data": {
+          "source": "Netflix"
+         }
+        }
+       },
+       {
+        "name": "disney",
+        "icon": "mdi:castle",
+        "tap_action": {
+         "action": "call-service",
+         "service": "media_player.select_source",
+         "target": {
+          "entity_id": "media_player.samsung_cu7100_65_tv_3"
+         },
+         "data": {
+          "source": "Disney+"
+         }
+        }
+       },
+       {
+        "name": "numbers",
+        "icon": "mdi:dialpad",
+        "tap_action": {
+         "action": "fire-dom-event",
+         "browser_mod": {
+          "service": "browser_mod.popup",
+          "data": {
+           "title": "מספרים",
+           "size": "normal",
+           "content": {
+            "type": "custom:universal-remote-card",
+            "platform": "Samsung TV",
+            "remote_id": "remote.samsung_cu7100_65_tv",
+            "media_player_id": "media_player.samsung_cu7100_65_tv_3",
+            "haptics": true,
+            "custom_actions": [],
+            "rows": [
+             [
+              "n7",
+              "n8",
+              "n9"
+             ],
+             [
+              "n4",
+              "n5",
+              "n6"
+             ],
+             [
+              "n1",
+              "n2",
+              "n3"
+             ],
+             [
+              null,
+              "n0",
+              null
+             ]
+            ]
+           }
+          }
+         }
+        }
+       }
+      ],
+      "remote_id": "remote.samsung_cu7100_65_tv",
+      "media_player_id": "media_player.samsung_cu7100_65_tv_3",
+      "haptics": true
+     }
+    },
+    {
+     "type": "conditional",
+     "conditions": [
+      {
+       "entity": "input_boolean.tv_device_mode",
+       "state": "on"
+      },
+      {
+       "entity": "input_boolean.tv_navigation_mode",
+       "state": "off"
+      }
+     ],
+     "card": {
+      "type": "custom:universal-remote-card",
+      "rows": [
+       [
+        "back",
+        "power",
+        "home"
+       ],
+       [
+        "volume_down",
+        "slider",
+        "volume_up"
+       ],
+       [
+        "touchpad"
+       ],
+       [
+        "previous",
+        "play_pause",
+        "next"
+       ],
+       [
+        "netflix",
+        "disney"
+       ],
+       [
+        "keyboard",
+        "numbers",
+        "search"
+       ]
+      ],
+      "platform": "Android TV",
+      "custom_actions": [
+       {
+        "name": "netflix",
+        "icon": "mdi:netflix",
+        "tap_action": {
+         "action": "call-service",
+         "service": "media_player.play_media",
+         "target": {
+          "entity_id": "media_player.partnertv_box"
+         },
+         "data": {
+          "media_content_type": "url",
+          "media_content_id": "https://www.netflix.com/"
+         }
+        }
+       },
+       {
+        "name": "disney",
+        "icon": "mdi:castle",
+        "tap_action": {
+         "action": "call-service",
+         "service": "media_player.play_media",
+         "target": {
+          "entity_id": "media_player.partnertv_box"
+         },
+         "data": {
+          "media_content_type": "url",
+          "media_content_id": "https://www.disneyplus.com/"
+         }
+        }
+       },
+       {
+        "name": "numbers",
+        "icon": "mdi:dialpad",
+        "tap_action": {
+         "action": "fire-dom-event",
+         "browser_mod": {
+          "service": "browser_mod.popup",
+          "data": {
+           "title": "מספרים",
+           "size": "normal",
+           "content": {
+            "type": "custom:universal-remote-card",
+            "platform": "Android TV",
+            "remote_id": "remote.partnertv_box",
+            "media_player_id": "media_player.partnertv_box",
+            "haptics": true,
+            "custom_actions": [],
+            "rows": [
+             [
+              "n7",
+              "n8",
+              "n9"
+             ],
+             [
+              "n4",
+              "n5",
+              "n6"
+             ],
+             [
+              "n1",
+              "n2",
+              "n3"
+             ],
+             [
+              null,
+              "n0",
+              null
+             ]
+            ]
+           }
+          }
+         }
+        }
+       }
+      ],
+      "remote_id": "remote.partnertv_box",
+      "media_player_id": "media_player.partnertv_box",
+      "haptics": true
+     }
+    },
+    {
+     "type": "conditional",
+     "conditions": [
+      {
+       "entity": "input_boolean.tv_device_mode",
+       "state": "on"
+      },
+      {
+       "entity": "input_boolean.tv_navigation_mode",
+       "state": "on"
+      }
+     ],
+     "card": {
+      "type": "custom:universal-remote-card",
+      "rows": [
+       [
+        "back",
+        "power",
+        "home"
+       ],
+       [
+        "volume_down",
+        "slider",
+        "volume_up"
+       ],
+       [
+        null,
+        "up",
+        null
+       ],
+       [
+        "left",
+        "center",
+        "right"
+       ],
+       [
+        null,
+        "down",
+        null
+       ],
+       [
+        "previous",
+        "play_pause",
+        "next"
+       ],
+       [
+        "netflix",
+        "disney"
+       ],
+       [
+        "keyboard",
+        "numbers",
+        "search"
+       ]
+      ],
+      "platform": "Android TV",
+      "custom_actions": [
+       {
+        "name": "netflix",
+        "icon": "mdi:netflix",
+        "tap_action": {
+         "action": "call-service",
+         "service": "media_player.play_media",
+         "target": {
+          "entity_id": "media_player.partnertv_box"
+         },
+         "data": {
+          "media_content_type": "url",
+          "media_content_id": "https://www.netflix.com/"
+         }
+        }
+       },
+       {
+        "name": "disney",
+        "icon": "mdi:castle",
+        "tap_action": {
+         "action": "call-service",
+         "service": "media_player.play_media",
+         "target": {
+          "entity_id": "media_player.partnertv_box"
+         },
+         "data": {
+          "media_content_type": "url",
+          "media_content_id": "https://www.disneyplus.com/"
+         }
+        }
+       },
+       {
+        "name": "numbers",
+        "icon": "mdi:dialpad",
+        "tap_action": {
+         "action": "fire-dom-event",
+         "browser_mod": {
+          "service": "browser_mod.popup",
+          "data": {
+           "title": "מספרים",
+           "size": "normal",
+           "content": {
+            "type": "custom:universal-remote-card",
+            "platform": "Android TV",
+            "remote_id": "remote.partnertv_box",
+            "media_player_id": "media_player.partnertv_box",
+            "haptics": true,
+            "custom_actions": [],
+            "rows": [
+             [
+              "n7",
+              "n8",
+              "n9"
+             ],
+             [
+              "n4",
+              "n5",
+              "n6"
+             ],
+             [
+              "n1",
+              "n2",
+              "n3"
+             ],
+             [
+              null,
+              "n0",
+              null
+             ]
+            ]
+           }
+          }
+         }
+        }
+       }
+      ],
+      "remote_id": "remote.partnertv_box",
+      "media_player_id": "media_player.partnertv_box",
+      "haptics": true
+     }
+    }
+   ]
+  },
+  {
+   "title": "דוד מים",
+   "path": "boiler",
+   "icon": "mdi:water-boiler",
+   "cards": [
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "דוד מים",
+     "secondary": "{% if is_state('switch.notes_boiler', 'on') %}\n  פועל - נותרו {{ states('sensor.notes_boiler_remaining_time') }} דק'\n{% else %}\n  כבוי\n{% endif %}",
+     "icon": "mdi:water-boiler",
+     "icon_color": "{{ 'blue' if is_state('switch.notes_boiler', 'on') else 'grey' }}",
+     "tap_action": {
+      "action": "call-service",
+      "service": "switch.toggle",
+      "target": {
+       "entity_id": "switch.notes_boiler"
+      },
+      "haptic": "medium"
+     },
+     "hold_action": {
+      "action": "more-info"
+     },
+     "fill_container": true,
+     "card_mod": {
+      "style": "ha-card {\n  background: {{ 'linear-gradient(135deg, rgba(33,150,243,0.22), rgba(33,150,243,0.06))' if is_state('switch.notes_boiler', 'on') else 'rgba(40,40,40,0.7)' }} !important;\n  border: {{ '1.5px solid rgba(33,150,243,0.5)' if is_state('switch.notes_boiler', 'on') else '1px solid rgba(255,255,255,0.06)' }} !important;\n  border-radius: 22px !important;\n  box-shadow: {{ '0 6px 24px rgba(33,150,243,0.3)' if is_state('switch.notes_boiler', 'on') else '0 2px 8px rgba(0,0,0,0.25)' }} !important;\n  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;\n}\n"
+     }
+    },
+    {
+     "type": "tile",
+     "entity": "input_number.boiler_timer_minutes",
+     "name": "זמן הפעלה",
+     "icon": "mdi:timer-outline",
+     "features": [
+      {
+       "type": "numeric-input"
+      }
+     ],
+     "card_mod": {
+      "style": "ha-card {\n  border-radius: 22px !important;\n  background: rgba(40,40,40,0.7) !important;\n  border: 1px solid rgba(255,255,255,0.06) !important;\n}\n"
+     }
+    },
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "הפעל דוד",
+     "secondary": "{{ states('input_number.boiler_timer_minutes') | int }} דקות",
+     "icon": "mdi:play-circle",
+     "icon_color": "blue",
+     "tap_action": {
+      "action": "call-service",
+      "service": "script.boiler_start_with_selected_timer",
+      "haptic": "heavy"
+     },
+     "fill_container": true,
+     "card_mod": {
+      "style": "ha-card {\n  background: linear-gradient(135deg, rgba(33,150,243,0.28), rgba(33,150,243,0.1)) !important;\n  border: 1.5px solid rgba(33,150,243,0.5) !important;\n  border-radius: 22px !important;\n  box-shadow: 0 4px 18px rgba(33,150,243,0.3) !important;\n}\n"
+     }
+    }
+   ]
+  },
+  {
+   "title": "תנור",
+   "path": "oven",
+   "icon": "mdi:stove",
+   "cards": [
+    {
+     "type": "custom:mushroom-template-card",
+     "primary": "תא ראשי",
+     "secondary": "{% if states('sensor.tnvr_machine_state') == 'run' %}\n  {{ states('sensor.tnvr_oven_mode') }} · {{ states('sensor.tnvr_temperature') }}°C → {{ states('sensor.tnvr_setpoint') }}°C\n{% else %}\n  כבוי\n{% endif %}",
+     "icon": "mdi:stove",
+     "icon_color": "{% if states('sensor.tnvr_machine_state') == 'run' %}orange{% else %}grey{% endif %}",
+     "fill_container": true,
+     "tap_action": {
+      "action": "more-info",
+      "entity": "sensor.tnvr_machine_state"
+     },
+     "card_mod": {
+      "style": "ha-card {\n  background: {{ 'linear-gradient(135deg, rgba(255,152,0,0.22), rgba(255,152,0,0.06))' if states('sensor.tnvr_machine_state') == 'run' else 'rgba(40,40,40,0.7)' }} !important;\n  border: {{ '1.5px solid rgba(255,152,0,0.5)' if states('sensor.tnvr_machine_state') == 'run' else '1px solid rgba(255,255,255,0.06)' }} !important;\n  border-radius: 22px !important;\n  box-shadow: {{ '0 6px 24px rgba(255,152,0,0.3)' if states('sensor.tnvr_machine_state') == 'run' else '0 2px 8px rgba(0,0,0,0.25)' }} !important;\n  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;\n  padding: 8px !important;\n}\nmushroom-shape-icon {\n  {% if states('sensor.tnvr_machine_state') == 'run' %}\n  animation: heat 2s ease-in-out infinite;\n  {% endif %}\n}\n@keyframes heat {\n  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(255,152,0,0.6)); }\n  50% { transform: scale(1.08); filter: drop-shadow(0 0 12px rgba(255,152,0,0.9)); }\n}\n"
+     }
+    },
+    {
+     "type": "conditional",
+     "conditions": [
+      {
+       "condition": "state",
+       "entity": "sensor.tnvr_machine_state",
+       "state": "run"
+      }
+     ],
+     "card": {
+      "type": "custom:mushroom-template-card",
+      "primary": "זמן סיום",
+      "secondary": "{{ states('sensor.tnvr_completion_time') }}",
+      "icon": "mdi:timer-sand",
+      "icon_color": "purple",
+      "card_mod": {
+       "style": "ha-card {\n  border-radius: 18px !important;\n  background: rgba(40,40,40,0.7) !important;\n  border: 1px solid rgba(255,255,255,0.06) !important;\n}\n"
+      }
+     }
+    },
+    {
+     "type": "conditional",
+     "conditions": [
+      {
+       "condition": "state",
+       "entity": "binary_sensor.tnvr_second_cavity_status",
+       "state": "on"
+      }
+     ],
+     "card": {
+      "type": "custom:mushroom-template-card",
+      "primary": "זמן סיום",
+      "secondary": "{{ states('sensor.tnvr_second_cavity_completion_time') }}",
+      "icon": "mdi:timer-sand",
+      "icon_color": "purple",
+      "card_mod": {
+       "style": "ha-card {\n  border-radius: 18px !important;\n  background: rgba(40,40,40,0.7) !important;\n  border: 1px solid rgba(255,255,255,0.06) !important;\n}\n"
+      }
+     }
+    },
+    {
+     "type": "horizontal-stack",
+     "cards": [
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "עצור",
+       "icon": "mdi:stop-circle",
+       "icon_color": "red",
+       "tap_action": {
+        "action": "call-service",
+        "service": "button.press",
+        "target": {
+         "entity_id": "button.tnvr_stop"
+        },
+        "haptic": "heavy"
+       },
+       "card_mod": {
+        "style": "ha-card {\n  background: linear-gradient(135deg, rgba(244,67,54,0.22), rgba(244,67,54,0.06)) !important;\n  border: 1.5px solid rgba(244,67,54,0.5) !important;\n  border-radius: 22px !important;\n  box-shadow: 0 4px 14px rgba(244,67,54,0.25) !important;\n  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;\n}\nha-card:active {\n  transform: scale(0.96) !important;\n}\n"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "תאורה",
+       "icon": "{% if is_state('light.tnvr_light', 'on') %}mdi:lightbulb-on{% else %}mdi:lightbulb-outline{% endif %}",
+       "icon_color": "{% if is_state('light.tnvr_light', 'on') %}yellow{% else %}grey{% endif %}",
+       "tap_action": {
+        "action": "call-service",
+        "service": "light.toggle",
+        "target": {
+         "entity_id": "light.tnvr_light"
+        },
+        "haptic": "medium"
+       },
+       "card_mod": {
+        "style": "ha-card {\n  background: {{ 'linear-gradient(135deg, rgba(255,235,59,0.22), rgba(255,235,59,0.06))' if is_state('light.tnvr_light', 'on') else 'rgba(40,40,40,0.7)' }} !important;\n  border: {{ '1.5px solid rgba(255,235,59,0.5)' if is_state('light.tnvr_light', 'on') else '1px solid rgba(255,255,255,0.06)' }} !important;\n  border-radius: 22px !important;\n  transition: all 0.3s ease !important;\n}\nha-card:active {\n  transform: scale(0.96) !important;\n}\n"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "resources": [],
+ "version": 3
+}

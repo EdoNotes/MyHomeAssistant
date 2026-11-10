@@ -1,0 +1,2854 @@
+{
+ "homeassistant": {
+  "backup": null
+ },
+ "panel_iframe": {
+  "car_management": {
+   "title": "ניהול רכבים",
+   "icon": "mdi:car",
+   "url": "http://localhost:8000",
+   "require_admin": false
+  }
+ },
+ "sensor": [
+  {
+   "platform": "file",
+   "name": "Home Assistant Update Log",
+   "file_path": "/config/docker-auto-update.log",
+   "scan_interval": 600
+  }
+ ],
+ "resources": [],
+ "version": 3,
+ "views": [
+  {
+   "type": "sections",
+   "title": "בית",
+   "path": "home",
+   "icon": "mdi:home",
+   "max_columns": 1,
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "הבית",
+       "subtitle": "{% set n = ['climate.khdr_shynh_hvrym', 'climate.mzgn_khdr_yldym', 'climate.myny_mrkzy_tvrndv'] | reject('is_state', 'off') | reject('is_state', 'unavailable') | list | count %}{{ 'כל המזגנים כבויים' if n == 0 else ('מזגן אחד פועל' if n == 1 else n ~ ' מזגנים פועלים') }}",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --title-font-size: 22px; --title-font-weight: 700; --title-line-height: 1.2; --subtitle-font-size: 13px; --subtitle-line-height: 1.4; --title-padding: 8px 4px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "justify",
+       "chips": [
+        {
+         "type": "template",
+         "icon": "mdi:snowflake",
+         "content": "אקלים",
+         "icon_color": "white",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/home"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: #0A6FD1; --text-color: #fff; --primary-text-color: #fff; --color: #fff; font-weight: 600; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:water-boiler",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/boiler"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:robot-vacuum",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/vacuum"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:television",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/tv"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:stove",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/oven"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { direction: rtl; --chip-height: 48px; --chip-border-radius: 24px; --chip-icon-size: 22px; --chip-font-size: 15px; --chip-font-weight: 600; --chip-spacing: 8px; --chip-background: var(--card-background-color); --chip-box-shadow: none; --chip-border-width: 0; padding: 4px 0 6px; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px; }\n.chip-container > :nth-child(1) { flex: 1 1 auto; min-width: 0; }\n.chip-container > :nth-child(2) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(3) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(4) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(5) { flex: 0 0 48px; min-width: 0; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "justify",
+       "chips": [
+        {
+         "type": "template",
+         "content": "הורים",
+         "icon": "mdi:bed",
+         "icon_color": "{{ 'blue' if is_state('input_select.thermostat_tab', 'חדר הורים') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.thermostat_tab"
+          },
+          "data": {
+           "option": "חדר הורים"
+          }
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('input_select.thermostat_tab', 'חדר הורים') else 'transparent' }}; --text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_select.thermostat_tab', 'חדר הורים') else 'var(--secondary-text-color)' }}; --primary-text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_select.thermostat_tab', 'חדר הורים') else 'var(--secondary-text-color)' }}; font-weight: {{ 600 if is_state('input_select.thermostat_tab', 'חדר הורים') else 500 }}; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "content": "ילדים",
+         "icon": "mdi:baby-carriage",
+         "icon_color": "{{ 'blue' if is_state('input_select.thermostat_tab', 'חדר ילדים') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.thermostat_tab"
+          },
+          "data": {
+           "option": "חדר ילדים"
+          }
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('input_select.thermostat_tab', 'חדר ילדים') else 'transparent' }}; --text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_select.thermostat_tab', 'חדר ילדים') else 'var(--secondary-text-color)' }}; --primary-text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_select.thermostat_tab', 'חדר ילדים') else 'var(--secondary-text-color)' }}; font-weight: {{ 600 if is_state('input_select.thermostat_tab', 'חדר ילדים') else 500 }}; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "content": "מרכזי",
+         "icon": "mdi:hvac",
+         "icon_color": "{{ 'blue' if is_state('input_select.thermostat_tab', 'מרכזי') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_select.select_option",
+          "target": {
+           "entity_id": "input_select.thermostat_tab"
+          },
+          "data": {
+           "option": "מרכזי"
+          }
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('input_select.thermostat_tab', 'מרכזי') else 'transparent' }}; --text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_select.thermostat_tab', 'מרכזי') else 'var(--secondary-text-color)' }}; --primary-text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_select.thermostat_tab', 'מרכזי') else 'var(--secondary-text-color)' }}; font-weight: {{ 600 if is_state('input_select.thermostat_tab', 'מרכזי') else 500 }}; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { direction: rtl; --chip-height: 44px; --chip-border-radius: 14px; --chip-font-size: 14px; --chip-spacing: 4px; --chip-box-shadow: none; --chip-border-width: 0; --chip-icon-size: 18px; background: var(--card-background-color) !important; border-radius: 18px !important; padding: 4px !important; border: var(--ha-card-border-width, 1px) solid var(--ha-card-border-color, var(--divider-color)) !important; }\n.chip-container { flex-wrap: nowrap !important; gap: 4px; }\n.chip-container > * { flex: 1 1 0; min-width: 0; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "חדר הורים"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "thermostat",
+        "entity": "climate.khdr_shynh_hvrym",
+        "name": "חדר שינה הורים",
+        "show_current_as_primary": false,
+        "card_mod": {
+         "style": {
+          ".": "ha-card { direction: ltr !important; background: none !important; border: none !important; box-shadow: none !important; overflow: visible !important; }\n.title { display: none !important; }\n.container { overflow: visible !important; }\n.container > * { padding: 2px 8px 0 !important; }\n.more-info { color: var(--secondary-text-color) !important; opacity: .7 !important; }\nhui-card-features { display: none !important; }\n",
+          "ha-state-control-climate-temperature $": ".info { gap: 0 !important; padding-bottom: 34px !important; }\n.info > .label:not(.secondary) { display: none !important; }\n.info::before { content: \"{% set s = states('climate.khdr_shynh_hvrym') %}{{ {'off': 'כבוי', 'cool': 'קירור', 'heat': 'חימום', 'dry': 'ייבוש', 'fan_only': 'אוורור', 'heat_cool': 'אוטומטי', 'auto': 'אוטומטי', 'unavailable': 'לא זמין'}.get(s, s) }}\" !important; font-size: 12.5px !important; font-weight: 600 !important; line-height: 1 !important; padding: 6px 12px !important; border-radius: 99px !important; margin-bottom: 6px !important; color: color-mix(in srgb, var(--state-color) 72%, var(--primary-text-color)) !important; background: color-mix(in srgb, var(--state-color) 20%, transparent) !important; }\nha-big-number { font-size: 92px !important; font-weight: 300 !important; letter-spacing: -4px !important; line-height: 1 !important; }\n.label.secondary { display: block !important; direction: rtl !important; width: auto !important; min-height: 0 !important; margin-top: 4px !important; font-size: 13px !important; font-weight: 400 !important; color: var(--secondary-text-color) !important; }\n.label.secondary ha-svg-icon { display: none !important; }\n.label.secondary::before { content: 'בחדר עכשיו \\2066' !important; }\n.buttons { bottom: 6px !important; gap: 20px !important; }\n.buttons ha-outlined-icon-button { --ha-icon-button-size: 46px !important; --ha-outlined-icon-button-outline-color: transparent !important; background: var(--card-background-color) !important; border-radius: 50% !important; color: var(--primary-text-color) !important; }\nha-control-circular-slider { position: relative !important; --control-circular-slider-background: color-mix(in srgb, var(--secondary-text-color) 22%, var(--card-background-color)) !important; --control-circular-slider-background-opacity: 1 !important; }\nha-control-circular-slider::before { content: '' !important; position: absolute !important; inset: 9.5% !important; border-radius: 50% !important; pointer-events: none !important; opacity: .38 !important; background: repeating-conic-gradient(from 224.6deg, var(--secondary-text-color) 0 .8deg, transparent .8deg 7.5deg) !important; -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)), conic-gradient(from 224deg, #000 0 272deg, transparent 272deg) !important; -webkit-mask-composite: source-in !important; mask-composite: intersect !important; }\nha-control-circular-slider::after { inset: 0 !important; opacity: .24 !important; background: radial-gradient(closest-side, var(--action-color, transparent) 0%, transparent 84%) !important; }\n",
+          "ha-state-control-climate-temperature $ ha-big-number $": ".addon { width: 0 !important; overflow: visible !important; padding: 0 !important; align-self: flex-start !important; }\n.unit { font-size: 0 !important; }\n.unit::before { content: '°' !important; font-size: 44px !important; font-weight: 300 !important; letter-spacing: 0 !important; color: var(--secondary-text-color) !important; }\n",
+          "ha-state-control-climate-temperature $ ha-control-circular-slider $": ".background, .arc { stroke-width: 6px !important; }\n.arc-colored { opacity: 1 !important; filter: drop-shadow(0 0 5px var(--control-circular-slider-color)) !important; }\n.inactive .arc-colored { opacity: 0 !important; filter: none !important; }\n.target-border { stroke-width: 24px !important; }\n.target { stroke-width: 13px !important; }\n.current { stroke-width: 11px !important; opacity: .9 !important; }\n"
+         }
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "חדר הורים"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "custom:mushroom-chips-card",
+        "alignment": "justify",
+        "chips": [
+         {
+          "type": "template",
+          "content": "כבוי",
+          "icon": "mdi:power",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "hvac_mode": "off"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'off') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 24%, var(--card-background-color))' if is_state('climate.khdr_shynh_hvrym', 'off') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'off') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.khdr_shynh_hvrym', 'off') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "קירור",
+          "icon": "mdi:snowflake",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "hvac_mode": "cool"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'cool') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 24%, var(--card-background-color))' if is_state('climate.khdr_shynh_hvrym', 'cool') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'cool') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.khdr_shynh_hvrym', 'cool') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "חימום",
+          "icon": "mdi:fire",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "hvac_mode": "heat"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'heat') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 24%, var(--card-background-color))' if is_state('climate.khdr_shynh_hvrym', 'heat') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'heat') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.khdr_shynh_hvrym', 'heat') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "אוטו",
+          "icon": "mdi:thermostat-auto",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "hvac_mode": "auto"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-auto-color, #43a047) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'auto') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-auto-color, #43a047) 24%, var(--card-background-color))' if is_state('climate.khdr_shynh_hvrym', 'auto') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-auto-color, #43a047) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'auto') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.khdr_shynh_hvrym', 'auto') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "ייבוש",
+          "icon": "mdi:water-percent",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "hvac_mode": "dry"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'dry') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 24%, var(--card-background-color))' if is_state('climate.khdr_shynh_hvrym', 'dry') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'dry') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.khdr_shynh_hvrym', 'dry') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "אוורור",
+          "icon": "mdi:fan",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "hvac_mode": "fan_only"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'fan_only') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 24%, var(--card-background-color))' if is_state('climate.khdr_shynh_hvrym', 'fan_only') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 72%, var(--primary-text-color))' if is_state('climate.khdr_shynh_hvrym', 'fan_only') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.khdr_shynh_hvrym', 'fan_only') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         }
+        ],
+        "card_mod": {
+         "style": "ha-card { direction: rtl; background: none !important; border: none !important; box-shadow: none !important; --chip-height: 64px; --chip-border-radius: 20px; --chip-font-size: 11.5px; --chip-icon-size: 24px; --chip-spacing: 0px; --chip-padding: 0; --chip-box-shadow: none; --chip-border-width: 0; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px !important; margin: 0 !important; }\n.chip-container > * { flex: 1 1 0; min-width: 0; margin: 0 !important; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "חדר הורים"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "custom:mushroom-chips-card",
+        "alignment": "justify",
+        "chips": [
+         {
+          "type": "template",
+          "content": "אוטו",
+          "icon": "mdi:fan-auto",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "fan_mode": "auto"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'auto') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'auto') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'auto') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'auto') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "נמוך",
+          "icon": "mdi:fan-speed-1",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "fan_mode": "low"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'low') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'low') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'low') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'low') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "בינוני",
+          "icon": "mdi:fan-speed-2",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "fan_mode": "medium"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'medium') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'medium') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'medium') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'medium') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "גבוה",
+          "icon": "mdi:fan-speed-3",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.khdr_shynh_hvrym"
+           },
+           "data": {
+            "fan_mode": "high"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'high') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'high') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'high') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.khdr_shynh_hvrym', 'fan_mode', 'high') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         }
+        ],
+        "card_mod": {
+         "style": "ha-card { direction: rtl; background: none !important; border: none !important; box-shadow: none !important; --chip-height: 46px; --chip-border-radius: 16px; --chip-font-size: 13.5px; --chip-icon-size: 19px; --chip-spacing: 0px; --chip-padding: 0; --chip-box-shadow: none; --chip-border-width: 0; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px !important; margin: 0 !important; }\n.chip-container > * { flex: 1 1 0; min-width: 0; margin: 0 !important; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "חדר ילדים"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "thermostat",
+        "entity": "climate.mzgn_khdr_yldym",
+        "name": "מזגן חדר ילדים",
+        "show_current_as_primary": false,
+        "card_mod": {
+         "style": {
+          ".": "ha-card { direction: ltr !important; background: none !important; border: none !important; box-shadow: none !important; overflow: visible !important; }\n.title { display: none !important; }\n.container { overflow: visible !important; }\n.container > * { padding: 2px 8px 0 !important; }\n.more-info { color: var(--secondary-text-color) !important; opacity: .7 !important; }\nhui-card-features { display: none !important; }\n",
+          "ha-state-control-climate-temperature $": ".info { gap: 0 !important; padding-bottom: 34px !important; }\n.info > .label:not(.secondary) { display: none !important; }\n.info::before { content: \"{% set s = states('climate.mzgn_khdr_yldym') %}{{ {'off': 'כבוי', 'cool': 'קירור', 'heat': 'חימום', 'dry': 'ייבוש', 'fan_only': 'אוורור', 'heat_cool': 'אוטומטי', 'auto': 'אוטומטי', 'unavailable': 'לא זמין'}.get(s, s) }}\" !important; font-size: 12.5px !important; font-weight: 600 !important; line-height: 1 !important; padding: 6px 12px !important; border-radius: 99px !important; margin-bottom: 6px !important; color: color-mix(in srgb, var(--state-color) 72%, var(--primary-text-color)) !important; background: color-mix(in srgb, var(--state-color) 20%, transparent) !important; }\nha-big-number { font-size: 92px !important; font-weight: 300 !important; letter-spacing: -4px !important; line-height: 1 !important; }\n.label.secondary { display: block !important; direction: rtl !important; width: auto !important; min-height: 0 !important; margin-top: 4px !important; font-size: 13px !important; font-weight: 400 !important; color: var(--secondary-text-color) !important; }\n.label.secondary ha-svg-icon { display: none !important; }\n.label.secondary::before { content: 'בחדר עכשיו \\2066' !important; }\n.buttons { bottom: 6px !important; gap: 20px !important; }\n.buttons ha-outlined-icon-button { --ha-icon-button-size: 46px !important; --ha-outlined-icon-button-outline-color: transparent !important; background: var(--card-background-color) !important; border-radius: 50% !important; color: var(--primary-text-color) !important; }\nha-control-circular-slider { position: relative !important; --control-circular-slider-background: color-mix(in srgb, var(--secondary-text-color) 22%, var(--card-background-color)) !important; --control-circular-slider-background-opacity: 1 !important; }\nha-control-circular-slider::before { content: '' !important; position: absolute !important; inset: 9.5% !important; border-radius: 50% !important; pointer-events: none !important; opacity: .38 !important; background: repeating-conic-gradient(from 224.6deg, var(--secondary-text-color) 0 .8deg, transparent .8deg 7.5deg) !important; -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)), conic-gradient(from 224deg, #000 0 272deg, transparent 272deg) !important; -webkit-mask-composite: source-in !important; mask-composite: intersect !important; }\nha-control-circular-slider::after { inset: 0 !important; opacity: .24 !important; background: radial-gradient(closest-side, var(--action-color, transparent) 0%, transparent 84%) !important; }\n",
+          "ha-state-control-climate-temperature $ ha-big-number $": ".addon { width: 0 !important; overflow: visible !important; padding: 0 !important; align-self: flex-start !important; }\n.unit { font-size: 0 !important; }\n.unit::before { content: '°' !important; font-size: 44px !important; font-weight: 300 !important; letter-spacing: 0 !important; color: var(--secondary-text-color) !important; }\n",
+          "ha-state-control-climate-temperature $ ha-control-circular-slider $": ".background, .arc { stroke-width: 6px !important; }\n.arc-colored { opacity: 1 !important; filter: drop-shadow(0 0 5px var(--control-circular-slider-color)) !important; }\n.inactive .arc-colored { opacity: 0 !important; filter: none !important; }\n.target-border { stroke-width: 24px !important; }\n.target { stroke-width: 13px !important; }\n.current { stroke-width: 11px !important; opacity: .9 !important; }\n"
+         }
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "חדר ילדים"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "custom:mushroom-chips-card",
+        "alignment": "justify",
+        "chips": [
+         {
+          "type": "template",
+          "content": "כבוי",
+          "icon": "mdi:power",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "hvac_mode": "off"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'off') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 24%, var(--card-background-color))' if is_state('climate.mzgn_khdr_yldym', 'off') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'off') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.mzgn_khdr_yldym', 'off') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "קירור",
+          "icon": "mdi:snowflake",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "hvac_mode": "cool"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'cool') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 24%, var(--card-background-color))' if is_state('climate.mzgn_khdr_yldym', 'cool') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'cool') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.mzgn_khdr_yldym', 'cool') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "חימום",
+          "icon": "mdi:fire",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "hvac_mode": "heat"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'heat') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 24%, var(--card-background-color))' if is_state('climate.mzgn_khdr_yldym', 'heat') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'heat') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.mzgn_khdr_yldym', 'heat') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "אוטו",
+          "icon": "mdi:thermostat-auto",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "hvac_mode": "auto"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-auto-color, #43a047) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'auto') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-auto-color, #43a047) 24%, var(--card-background-color))' if is_state('climate.mzgn_khdr_yldym', 'auto') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-auto-color, #43a047) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'auto') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.mzgn_khdr_yldym', 'auto') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "ייבוש",
+          "icon": "mdi:water-percent",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "hvac_mode": "dry"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'dry') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 24%, var(--card-background-color))' if is_state('climate.mzgn_khdr_yldym', 'dry') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'dry') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.mzgn_khdr_yldym', 'dry') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "אוורור",
+          "icon": "mdi:fan",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "hvac_mode": "fan_only"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'fan_only') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 24%, var(--card-background-color))' if is_state('climate.mzgn_khdr_yldym', 'fan_only') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 72%, var(--primary-text-color))' if is_state('climate.mzgn_khdr_yldym', 'fan_only') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.mzgn_khdr_yldym', 'fan_only') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         }
+        ],
+        "card_mod": {
+         "style": "ha-card { direction: rtl; background: none !important; border: none !important; box-shadow: none !important; --chip-height: 64px; --chip-border-radius: 20px; --chip-font-size: 11.5px; --chip-icon-size: 24px; --chip-spacing: 0px; --chip-padding: 0; --chip-box-shadow: none; --chip-border-width: 0; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px !important; margin: 0 !important; }\n.chip-container > * { flex: 1 1 0; min-width: 0; margin: 0 !important; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "חדר ילדים"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "custom:mushroom-chips-card",
+        "alignment": "justify",
+        "chips": [
+         {
+          "type": "template",
+          "content": "אוטו",
+          "icon": "mdi:fan-auto",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "fan_mode": "auto"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'auto') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'auto') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'auto') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'auto') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "נמוך",
+          "icon": "mdi:fan-speed-1",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "fan_mode": "low"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'low') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'low') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'low') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'low') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "בינוני",
+          "icon": "mdi:fan-speed-2",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "fan_mode": "medium"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'medium') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'medium') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'medium') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'medium') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "גבוה",
+          "icon": "mdi:fan-speed-3",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.mzgn_khdr_yldym"
+           },
+           "data": {
+            "fan_mode": "high"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'high') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'high') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'high') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.mzgn_khdr_yldym', 'fan_mode', 'high') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         }
+        ],
+        "card_mod": {
+         "style": "ha-card { direction: rtl; background: none !important; border: none !important; box-shadow: none !important; --chip-height: 46px; --chip-border-radius: 16px; --chip-font-size: 13.5px; --chip-icon-size: 19px; --chip-spacing: 0px; --chip-padding: 0; --chip-box-shadow: none; --chip-border-width: 0; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px !important; margin: 0 !important; }\n.chip-container > * { flex: 1 1 0; min-width: 0; margin: 0 !important; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "מרכזי"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "thermostat",
+        "entity": "climate.myny_mrkzy_tvrndv",
+        "name": "מיני מרכזי טורנדו ⚡",
+        "show_current_as_primary": false,
+        "card_mod": {
+         "style": {
+          ".": "ha-card { direction: ltr !important; background: none !important; border: none !important; box-shadow: none !important; overflow: visible !important; }\n.title { display: none !important; }\n.container { overflow: visible !important; }\n.container > * { padding: 2px 8px 0 !important; }\n.more-info { color: var(--secondary-text-color) !important; opacity: .7 !important; }\nhui-card-features { display: none !important; }\n",
+          "ha-state-control-climate-temperature $": ".info { gap: 0 !important; padding-bottom: 34px !important; }\n.info > .label:not(.secondary) { display: none !important; }\n.info::before { content: \"{% set s = states('climate.myny_mrkzy_tvrndv') %}{{ {'off': 'כבוי', 'cool': 'קירור', 'heat': 'חימום', 'dry': 'ייבוש', 'fan_only': 'אוורור', 'heat_cool': 'אוטומטי', 'auto': 'אוטומטי', 'unavailable': 'לא זמין'}.get(s, s) }}\" !important; font-size: 12.5px !important; font-weight: 600 !important; line-height: 1 !important; padding: 6px 12px !important; border-radius: 99px !important; margin-bottom: 6px !important; color: color-mix(in srgb, var(--state-color) 72%, var(--primary-text-color)) !important; background: color-mix(in srgb, var(--state-color) 20%, transparent) !important; }\nha-big-number { font-size: 92px !important; font-weight: 300 !important; letter-spacing: -4px !important; line-height: 1 !important; }\n.label.secondary { display: block !important; direction: rtl !important; width: auto !important; min-height: 0 !important; margin-top: 4px !important; font-size: 13px !important; font-weight: 400 !important; color: var(--secondary-text-color) !important; }\n.label.secondary ha-svg-icon { display: none !important; }\n.label.secondary::before { content: 'בחדר עכשיו \\2066' !important; }\n.buttons { bottom: 6px !important; gap: 20px !important; }\n.buttons ha-outlined-icon-button { --ha-icon-button-size: 46px !important; --ha-outlined-icon-button-outline-color: transparent !important; background: var(--card-background-color) !important; border-radius: 50% !important; color: var(--primary-text-color) !important; }\nha-control-circular-slider { position: relative !important; --control-circular-slider-background: color-mix(in srgb, var(--secondary-text-color) 22%, var(--card-background-color)) !important; --control-circular-slider-background-opacity: 1 !important; }\nha-control-circular-slider::before { content: '' !important; position: absolute !important; inset: 9.5% !important; border-radius: 50% !important; pointer-events: none !important; opacity: .38 !important; background: repeating-conic-gradient(from 224.6deg, var(--secondary-text-color) 0 .8deg, transparent .8deg 7.5deg) !important; -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)), conic-gradient(from 224deg, #000 0 272deg, transparent 272deg) !important; -webkit-mask-composite: source-in !important; mask-composite: intersect !important; }\nha-control-circular-slider::after { inset: 0 !important; opacity: .24 !important; background: radial-gradient(closest-side, var(--action-color, transparent) 0%, transparent 84%) !important; }\n",
+          "ha-state-control-climate-temperature $ ha-big-number $": ".addon { width: 0 !important; overflow: visible !important; padding: 0 !important; align-self: flex-start !important; }\n.unit { font-size: 0 !important; }\n.unit::before { content: '°' !important; font-size: 44px !important; font-weight: 300 !important; letter-spacing: 0 !important; color: var(--secondary-text-color) !important; }\n",
+          "ha-state-control-climate-temperature $ ha-control-circular-slider $": ".background, .arc { stroke-width: 6px !important; }\n.arc-colored { opacity: 1 !important; filter: drop-shadow(0 0 5px var(--control-circular-slider-color)) !important; }\n.inactive .arc-colored { opacity: 0 !important; filter: none !important; }\n.target-border { stroke-width: 24px !important; }\n.target { stroke-width: 13px !important; }\n.current { stroke-width: 11px !important; opacity: .9 !important; }\n"
+         }
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "מרכזי"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "custom:mushroom-chips-card",
+        "alignment": "justify",
+        "chips": [
+         {
+          "type": "template",
+          "content": "כבוי",
+          "icon": "mdi:power",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "hvac_mode": "off"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'off') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 24%, var(--card-background-color))' if is_state('climate.myny_mrkzy_tvrndv', 'off') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-off-color, var(--secondary-text-color)) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'off') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.myny_mrkzy_tvrndv', 'off') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "קירור",
+          "icon": "mdi:snowflake",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "hvac_mode": "cool"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'cool') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 24%, var(--card-background-color))' if is_state('climate.myny_mrkzy_tvrndv', 'cool') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-cool-color, #2b9af9) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'cool') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.myny_mrkzy_tvrndv', 'cool') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "חימום",
+          "icon": "mdi:fire",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "hvac_mode": "heat"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'heat') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 24%, var(--card-background-color))' if is_state('climate.myny_mrkzy_tvrndv', 'heat') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-heat-color, #ff8100) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'heat') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.myny_mrkzy_tvrndv', 'heat') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "אוטו",
+          "icon": "mdi:sun-snowflake-variant",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "hvac_mode": "heat_cool"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-heat_cool-color, #f1c447) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'heat_cool') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-heat_cool-color, #f1c447) 24%, var(--card-background-color))' if is_state('climate.myny_mrkzy_tvrndv', 'heat_cool') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-heat_cool-color, #f1c447) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'heat_cool') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.myny_mrkzy_tvrndv', 'heat_cool') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "ייבוש",
+          "icon": "mdi:water-percent",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "hvac_mode": "dry"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'dry') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 24%, var(--card-background-color))' if is_state('climate.myny_mrkzy_tvrndv', 'dry') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-dry-color, #efbd07) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'dry') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.myny_mrkzy_tvrndv', 'dry') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "אוורור",
+          "icon": "mdi:fan",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_hvac_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "hvac_mode": "fan_only"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 5px !important; padding: 0 2px !important; flex-direction: column !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'fan_only') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 24%, var(--card-background-color))' if is_state('climate.myny_mrkzy_tvrndv', 'fan_only') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, var(--state-climate-fan_only-color, #8fbac0) 72%, var(--primary-text-color))' if is_state('climate.myny_mrkzy_tvrndv', 'fan_only') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state('climate.myny_mrkzy_tvrndv', 'fan_only') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         }
+        ],
+        "card_mod": {
+         "style": "ha-card { direction: rtl; background: none !important; border: none !important; box-shadow: none !important; --chip-height: 64px; --chip-border-radius: 20px; --chip-font-size: 11.5px; --chip-icon-size: 24px; --chip-spacing: 0px; --chip-padding: 0; --chip-box-shadow: none; --chip-border-width: 0; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px !important; margin: 0 !important; }\n.chip-container > * { flex: 1 1 0; min-width: 0; margin: 0 !important; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "input_select.thermostat_tab",
+         "state": "מרכזי"
+        }
+       ],
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       },
+       "card": {
+        "type": "custom:mushroom-chips-card",
+        "alignment": "justify",
+        "chips": [
+         {
+          "type": "template",
+          "content": "אוטו",
+          "icon": "mdi:fan-auto",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "fan_mode": "auto"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'auto') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'auto') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'auto') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'auto') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "נמוך",
+          "icon": "mdi:fan-speed-1",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "fan_mode": "low"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'low') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'low') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'low') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'low') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         },
+         {
+          "type": "template",
+          "content": "גבוה",
+          "icon": "mdi:fan-speed-3",
+          "tap_action": {
+           "action": "call-service",
+           "service": "climate.set_fan_mode",
+           "target": {
+            "entity_id": "climate.myny_mrkzy_tvrndv"
+           },
+           "data": {
+            "fan_mode": "high"
+           }
+          },
+          "hold_action": {
+           "action": "none"
+          },
+          "double_tap_action": {
+           "action": "none"
+          },
+          "card_mod": {
+           "style": ":host { display: block !important; width: 100% !important; }\n.content { gap: 7px !important; padding: 0 2px !important; }\n::slotted(*) { margin: 0 !important; }\n::slotted(ha-state-icon) { color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'high') else 'var(--secondary-text-color)' }} !important; }\nha-card { width: 100% !important; min-width: 0 !important; box-sizing: border-box !important; justify-content: center !important; transition: background .25s !important; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'high') else 'var(--card-background-color)' }} !important; --text-color: {{ 'color-mix(in srgb, #0A6FD1 72%, var(--primary-text-color))' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'high') else 'var(--secondary-text-color)' }} !important; --chip-font-weight: {{ '600' if is_state_attr('climate.myny_mrkzy_tvrndv', 'fan_mode', 'high') else '500' }} !important; }\nha-card:active { transform: scale(.96) !important; }\n"
+          }
+         }
+        ],
+        "card_mod": {
+         "style": "ha-card { direction: rtl; background: none !important; border: none !important; box-shadow: none !important; --chip-height: 46px; --chip-border-radius: 16px; --chip-font-size: 13.5px; --chip-icon-size: 19px; --chip-spacing: 0px; --chip-padding: 0; --chip-box-shadow: none; --chip-border-width: 0; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px !important; margin: 0 !important; }\n.chip-container > * { flex: 1 1 0; min-width: 0; margin: 0 !important; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "sections",
+   "title": "שואב",
+   "path": "vacuum",
+   "icon": "mdi:robot-vacuum",
+   "max_columns": 1,
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "שואב",
+       "subtitle": "Saros 20 · {% set m = {\"charging\": \"בטעינה\", \"charging_complete\": \"טעינה הושלמה\", \"cleaning\": \"מנקה\", \"returning_home\": \"חוזר לעגינה\", \"docking\": \"עוגן\", \"paused\": \"מושהה\", \"idle\": \"ממתין\", \"error\": \"שגיאה\", \"emptying_the_bin\": \"מרוקן מיכל\", \"washing_the_mop\": \"שוטף מגב\", \"going_to_wash_the_mop\": \"בדרך לשטיפת מגב\", \"segment_cleaning\": \"מנקה חדר\", \"zoned_cleaning\": \"מנקה אזור\", \"spot_cleaning\": \"ניקוי נקודתי\", \"charger_disconnected\": \"מטען מנותק\", \"attaching_the_mop\": \"מחבר מגב\", \"detaching_the_mop\": \"מנתק מגב\", \"device_offline\": \"לא מחובר\", \"starting\": \"מתחיל\", \"robot_status_mopping\": \"שוטף\", \"updating\": \"מתעדכן\", \"mapping\": \"ממפה\"} %}{% set s = states('sensor.saros_20_complete_status') %}{{ m.get(s, s) }} · {{ states('sensor.saros_20_complete_battery') }}%",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --title-font-size: 22px; --title-font-weight: 700; --title-line-height: 1.2; --subtitle-font-size: 13px; --subtitle-line-height: 1.4; --title-padding: 8px 4px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "justify",
+       "chips": [
+        {
+         "type": "template",
+         "icon": "mdi:snowflake",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/home"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:water-boiler",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/boiler"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:robot-vacuum",
+         "content": "שואב",
+         "icon_color": "white",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/vacuum"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: #0A6FD1; --text-color: #fff; --primary-text-color: #fff; --color: #fff; font-weight: 600; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:television",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/tv"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:stove",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/oven"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { direction: rtl; --chip-height: 48px; --chip-border-radius: 24px; --chip-icon-size: 22px; --chip-font-size: 15px; --chip-font-weight: 600; --chip-spacing: 8px; --chip-background: var(--card-background-color); --chip-box-shadow: none; --chip-border-width: 0; padding: 4px 0 6px; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px; }\n.chip-container > :nth-child(1) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(2) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(3) { flex: 1 1 auto; min-width: 0; }\n.chip-container > :nth-child(4) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(5) { flex: 0 0 48px; min-width: 0; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "entity": "vacuum.saros_20_complete",
+         "state": "cleaning"
+        }
+       ],
+       "card": {
+        "type": "custom:vacuum-card",
+        "entity": "vacuum.saros_20_complete",
+        "map": "image.slvn_saros_20_complete_map_1",
+        "map_refresh": 2,
+        "show_name": true,
+        "show_status": true,
+        "show_toolbar": true,
+        "compact_view": false,
+        "stats": {
+         "default": [
+          {
+           "unit": "%",
+           "subtitle": "סוללה",
+           "entity_id": "sensor.saros_20_complete_battery"
+          }
+         ],
+         "cleaning": [
+          {
+           "unit": "מ״ר",
+           "subtitle": "שטח",
+           "entity_id": "sensor.saros_20_complete_cleaning_area"
+          },
+          {
+           "unit": "דק׳",
+           "subtitle": "זמן",
+           "entity_id": "sensor.saros_20_complete_cleaning_time"
+          },
+          {
+           "subtitle": "חדר",
+           "entity_id": "sensor.saros_20_complete_current_room"
+          }
+         ]
+        },
+        "shortcuts": [
+         {
+          "name": "Send to Base",
+          "service": "vacuum.return_to_base",
+          "service_data": {
+           "entity_id": "vacuum.saros_20_complete"
+          },
+          "icon": "mdi:home"
+         }
+        ],
+        "card_mod": {
+         "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { overflow: hidden; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "entity": "vacuum.saros_20_complete",
+         "state_not": "cleaning"
+        }
+       ],
+       "card": {
+        "type": "custom:vacuum-card",
+        "entity": "vacuum.saros_20_complete",
+        "show_name": true,
+        "show_status": true,
+        "show_toolbar": true,
+        "compact_view": false,
+        "stats": {
+         "default": [
+          {
+           "unit": "%",
+           "subtitle": "סוללה",
+           "entity_id": "sensor.saros_20_complete_battery"
+          },
+          {
+           "subtitle": "ניקויים",
+           "entity_id": "sensor.saros_20_complete_total_cleaning_count"
+          }
+         ]
+        },
+        "shortcuts": [
+         {
+          "name": "Send to Base",
+          "service": "vacuum.return_to_base",
+          "service_data": {
+           "entity_id": "vacuum.saros_20_complete"
+          },
+          "icon": "mdi:home"
+         }
+        ],
+        "card_mod": {
+         "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { overflow: hidden; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "select.saros_20_complete_cleaning_mode",
+       "name": "עוצמת שאיבה",
+       "icon": "mdi:fan",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "select-options"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": "auto"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { --tile-color: #0A6FD1 !important; --feature-border-radius: 14px; }\n"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "select.saros_20_complete_mop_intensity",
+       "name": "עוצמת שטיפה",
+       "icon": "mdi:water-percent",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "select-options"
+        }
+       ],
+       "grid_options": {
+        "columns": 6,
+        "rows": "auto"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { --tile-color: #0A6FD1 !important; --feature-border-radius: 14px; }\n"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "select.saros_20_complete_selected_map",
+       "name": "מפה נבחרת",
+       "icon": "mdi:map",
+       "features_position": "bottom",
+       "features": [
+        {
+         "type": "select-options"
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { --tile-color: #0A6FD1 !important; --feature-border-radius: 14px; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "entities",
+       "show_header_toggle": false,
+       "entities": [
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "Saros 20 · {% set m = {\"charging\": \"בטעינה\", \"charging_complete\": \"טעינה הושלמה\", \"cleaning\": \"מנקה\", \"returning_home\": \"חוזר לעגינה\", \"docking\": \"עוגן\", \"paused\": \"מושהה\", \"idle\": \"ממתין\", \"error\": \"שגיאה\", \"emptying_the_bin\": \"מרוקן מיכל\", \"washing_the_mop\": \"שוטף מגב\", \"going_to_wash_the_mop\": \"בדרך לשטיפת מגב\", \"segment_cleaning\": \"מנקה חדר\", \"zoned_cleaning\": \"מנקה אזור\", \"spot_cleaning\": \"ניקוי נקודתי\", \"charger_disconnected\": \"מטען מנותק\", \"attaching_the_mop\": \"מחבר מגב\", \"detaching_the_mop\": \"מנתק מגב\", \"device_offline\": \"לא מחובר\", \"starting\": \"מתחיל\", \"robot_status_mopping\": \"שוטף\", \"updating\": \"מתעדכן\", \"mapping\": \"ממפה\"} %}{% set s = states('sensor.saros_20_complete_status') %}{{ m.get(s, s) }}",
+         "secondary": "סוללה: {{ states('sensor.saros_20_complete_battery') }}%{% if is_state('binary_sensor.saros_20_complete_dock_mop_drying', 'on') %} · מייבש מגב {{ states('sensor.saros_20_complete_dock_mop_drying_remaining_time') | round(0) }} דק'{% endif %}",
+         "icon": "mdi:robot-vacuum",
+         "icon_color": "{% if is_state('binary_sensor.saros_20_complete_cleaning', 'on') %}\n  green\n{% elif is_state('binary_sensor.saros_20_complete_charging', 'on') %}\n  blue\n{% else %}\n  grey\n{% endif %}",
+         "tap_action": {
+          "action": "more-info",
+          "entity": "vacuum.saros_20_complete"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; padding-inline-end: 56px; direction: rtl; }\nha-card { border-bottom: 1px solid var(--divider-color) !important; }\nha-card::after { content: ''; position: absolute; inset-inline-end: 12px; top: 50%; width: 9px; height: 9px; margin-top: -5px; pointer-events: none; border-top: 2px solid var(--secondary-text-color); border-left: 2px solid var(--secondary-text-color); transform: rotate(-45deg); }\n"
+         }
+        },
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "F25 Ace Combo · {% if states('sensor.roborock_f25_ace_combo_status') in ['unavailable', 'unknown'] %}לא מחובר{% else %}{{ states('sensor.roborock_f25_ace_combo_status') }}{% endif %}",
+         "secondary": "{% set b = states('sensor.roborock_f25_ace_combo_battery') %}{% if b in ['unavailable', 'unknown'] %}—{% else %}סוללה: {{ b }}%{% endif %}",
+         "icon": "mdi:vacuum",
+         "icon_color": "{% if states('sensor.roborock_f25_ace_combo_status') in ['unavailable', 'unknown'] %}grey{% elif is_state('sensor.roborock_f25_ace_combo_error', 'none') %}green{% else %}red{% endif %}",
+         "tap_action": {
+          "action": "more-info",
+          "entity": "sensor.roborock_f25_ace_combo_status"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; padding-inline-end: 56px; direction: rtl; }\nha-card::after { content: ''; position: absolute; inset-inline-end: 12px; top: 50%; width: 9px; height: 9px; margin-top: -5px; pointer-events: none; border-top: 2px solid var(--secondary-text-color); border-left: 2px solid var(--secondary-text-color); transform: rotate(-45deg); }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\n.card-content { padding: 4px 12px !important; }\n#states > * { margin: 0 !important; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      }
+     ]
+    }
+   ],
+   "subview": true,
+   "back_path": "/lovelace/home"
+  },
+  {
+   "type": "sections",
+   "title": "טלוויזיה",
+   "path": "tv",
+   "icon": "mdi:television",
+   "max_columns": 1,
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "טלוויזיה",
+       "subtitle": "{% if is_state('input_boolean.tv_device_mode', 'off') %}Samsung TV · {{ 'פועלת' if is_state('media_player.samsung_cu7100_65_tv_3', 'on') else 'כבויה' }}{% else %}Android TV · {{ 'כבוי' if states('media_player.partnertv_box') in ['off', 'unavailable', 'unknown', 'standby'] else 'פועל' }}{% endif %}",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --title-font-size: 22px; --title-font-weight: 700; --title-line-height: 1.2; --subtitle-font-size: 13px; --subtitle-line-height: 1.4; --title-padding: 8px 4px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "justify",
+       "chips": [
+        {
+         "type": "template",
+         "icon": "mdi:snowflake",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/home"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:water-boiler",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/boiler"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:robot-vacuum",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/vacuum"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:television",
+         "content": "טלוויזיה",
+         "icon_color": "white",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/tv"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: #0A6FD1; --text-color: #fff; --primary-text-color: #fff; --color: #fff; font-weight: 600; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:stove",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/oven"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { direction: rtl; --chip-height: 48px; --chip-border-radius: 24px; --chip-icon-size: 22px; --chip-font-size: 15px; --chip-font-weight: 600; --chip-spacing: 8px; --chip-background: var(--card-background-color); --chip-box-shadow: none; --chip-border-width: 0; padding: 4px 0 6px; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px; }\n.chip-container > :nth-child(1) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(2) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(3) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(4) { flex: 1 1 auto; min-width: 0; }\n.chip-container > :nth-child(5) { flex: 0 0 48px; min-width: 0; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "justify",
+       "chips": [
+        {
+         "type": "template",
+         "content": "Samsung TV",
+         "icon": "mdi:television",
+         "icon_color": "{{ 'blue' if is_state('input_boolean.tv_device_mode', 'off') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_boolean.turn_off",
+          "target": {
+           "entity_id": "input_boolean.tv_device_mode"
+          }
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('input_boolean.tv_device_mode', 'off') else 'transparent' }}; --text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_boolean.tv_device_mode', 'off') else 'var(--secondary-text-color)' }}; --primary-text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_boolean.tv_device_mode', 'off') else 'var(--secondary-text-color)' }}; font-weight: {{ 600 if is_state('input_boolean.tv_device_mode', 'off') else 500 }}; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "content": "Android TV",
+         "icon": "mdi:android",
+         "icon_color": "{{ 'blue' if is_state('input_boolean.tv_device_mode', 'on') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_boolean.turn_on",
+          "target": {
+           "entity_id": "input_boolean.tv_device_mode"
+          }
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('input_boolean.tv_device_mode', 'on') else 'transparent' }}; --text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_boolean.tv_device_mode', 'on') else 'var(--secondary-text-color)' }}; --primary-text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_boolean.tv_device_mode', 'on') else 'var(--secondary-text-color)' }}; font-weight: {{ 600 if is_state('input_boolean.tv_device_mode', 'on') else 500 }}; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { direction: rtl; --chip-height: 44px; --chip-border-radius: 14px; --chip-font-size: 14px; --chip-spacing: 4px; --chip-box-shadow: none; --chip-border-width: 0; --chip-icon-size: 18px; background: var(--card-background-color) !important; border-radius: 18px !important; padding: 4px !important; border: var(--ha-card-border-width, 1px) solid var(--ha-card-border-color, var(--divider-color)) !important; }\n.chip-container { flex-wrap: nowrap !important; gap: 4px; }\n.chip-container > * { flex: 1 1 0; min-width: 0; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "justify",
+       "chips": [
+        {
+         "type": "template",
+         "content": "חיצים",
+         "icon": "mdi:arrow-all",
+         "icon_color": "{{ 'blue' if is_state('input_boolean.tv_navigation_mode', 'on') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_boolean.turn_on",
+          "target": {
+           "entity_id": "input_boolean.tv_navigation_mode"
+          }
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('input_boolean.tv_navigation_mode', 'on') else 'transparent' }}; --text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_boolean.tv_navigation_mode', 'on') else 'var(--secondary-text-color)' }}; --primary-text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_boolean.tv_navigation_mode', 'on') else 'var(--secondary-text-color)' }}; font-weight: {{ 600 if is_state('input_boolean.tv_navigation_mode', 'on') else 500 }}; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "content": "משטח מגע",
+         "icon": "mdi:gesture-swipe",
+         "icon_color": "{{ 'blue' if is_state('input_boolean.tv_navigation_mode', 'off') else 'disabled' }}",
+         "tap_action": {
+          "action": "call-service",
+          "service": "input_boolean.turn_off",
+          "target": {
+           "entity_id": "input_boolean.tv_navigation_mode"
+          }
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('input_boolean.tv_navigation_mode', 'off') else 'transparent' }}; --text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_boolean.tv_navigation_mode', 'off') else 'var(--secondary-text-color)' }}; --primary-text-color: {{ 'color-mix(in srgb, #0A6FD1 45%, var(--primary-text-color))' if is_state('input_boolean.tv_navigation_mode', 'off') else 'var(--secondary-text-color)' }}; font-weight: {{ 600 if is_state('input_boolean.tv_navigation_mode', 'off') else 500 }}; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { direction: rtl; --chip-height: 44px; --chip-border-radius: 14px; --chip-font-size: 14px; --chip-spacing: 4px; --chip-box-shadow: none; --chip-border-width: 0; --chip-icon-size: 18px; background: var(--card-background-color) !important; border-radius: 18px !important; padding: 4px !important; border: var(--ha-card-border-width, 1px) solid var(--ha-card-border-color, var(--divider-color)) !important; }\n.chip-container { flex-wrap: nowrap !important; gap: 4px; }\n.chip-container > * { flex: 1 1 0; min-width: 0; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "entity": "input_boolean.tv_device_mode",
+         "state": "off"
+        },
+        {
+         "entity": "input_boolean.tv_navigation_mode",
+         "state": "on"
+        }
+       ],
+       "card": {
+        "type": "custom:universal-remote-card",
+        "rows": [
+         [
+          "circlepad"
+         ],
+         [
+          "back",
+          "power",
+          "home"
+         ],
+         [
+          "volume_down",
+          "slider",
+          "volume_up"
+         ],
+         [
+          "rewind",
+          "play_pause",
+          "fast_forward"
+         ],
+         [
+          "netflix",
+          "disney",
+          "numbers"
+         ]
+        ],
+        "platform": "Samsung TV",
+        "custom_actions": [
+         {
+          "name": "back",
+          "icon": "mdi:arrow-left-top",
+          "tap_action": {
+           "action": "call-service",
+           "service": "remote.send_command",
+           "target": {
+            "entity_id": "remote.samsung_cu7100_65_tv"
+           },
+           "data": {
+            "command": "KEY_RETURN"
+           }
+          }
+         },
+         {
+          "name": "netflix",
+          "icon": "mdi:netflix",
+          "tap_action": {
+           "action": "call-service",
+           "service": "media_player.select_source",
+           "target": {
+            "entity_id": "media_player.samsung_cu7100_65_tv_3"
+           },
+           "data": {
+            "source": "Netflix"
+           }
+          }
+         },
+         {
+          "name": "disney",
+          "icon": "mdi:castle",
+          "tap_action": {
+           "action": "call-service",
+           "service": "media_player.select_source",
+           "target": {
+            "entity_id": "media_player.samsung_cu7100_65_tv_3"
+           },
+           "data": {
+            "source": "Disney+"
+           }
+          }
+         },
+         {
+          "name": "numbers",
+          "icon": "mdi:dialpad",
+          "tap_action": {
+           "action": "fire-dom-event",
+           "browser_mod": {
+            "service": "browser_mod.popup",
+            "data": {
+             "title": "מספרים",
+             "size": "normal",
+             "content": {
+              "type": "custom:universal-remote-card",
+              "platform": "Samsung TV",
+              "remote_id": "remote.samsung_cu7100_65_tv",
+              "media_player_id": "media_player.samsung_cu7100_65_tv_3",
+              "haptics": true,
+              "custom_actions": [],
+              "rows": [
+               [
+                "n7",
+                "n8",
+                "n9"
+               ],
+               [
+                "n4",
+                "n5",
+                "n6"
+               ],
+               [
+                "n1",
+                "n2",
+                "n3"
+               ],
+               [
+                null,
+                "n0",
+                null
+               ]
+              ]
+             }
+            }
+           }
+          }
+         }
+        ],
+        "remote_id": "remote.samsung_cu7100_65_tv",
+        "media_player_id": "media_player.samsung_cu7100_65_tv_3",
+        "haptics": true,
+        "styles": "\nha-card { border-radius: 24px !important; box-shadow: none !important; padding: 18px 14px 20px !important;\n  gap: 8px; --lovelace-background: var(--primary-background-color); }\n.row { width: 100%; box-sizing: border-box; padding: 6px 4px; gap: 10px; }\nremote-button { width: 56px; height: 56px; flex: 0 0 56px; --icon-size: 26px; }\nremote-button::part(button) { background: var(--primary-background-color); border-radius: 50%; }\n.empty-button { width: 56px; height: 56px; flex: 0 0 56px; }\n#power { --icon-color: var(--error-color); }\n#power::part(button) { background: color-mix(in srgb, var(--error-color) 18%, var(--card-background-color)); }\nremote-slider { flex: 1 1 auto; --color: #0A6FD1; --height: 44px; }\nremote-circlepad { width: 264px; --black-color: transparent; --icon-size: 30px;\n  --icon-color: var(--secondary-text-color); }\nremote-circlepad::part(center) { --icon-color: #0A6FD1; }\n",
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "entity": "input_boolean.tv_device_mode",
+         "state": "off"
+        },
+        {
+         "entity": "input_boolean.tv_navigation_mode",
+         "state": "off"
+        }
+       ],
+       "card": {
+        "type": "custom:universal-remote-card",
+        "rows": [
+         [
+          "touchpad"
+         ],
+         [
+          "back",
+          "power",
+          "home"
+         ],
+         [
+          "volume_down",
+          "slider",
+          "volume_up"
+         ],
+         [
+          "rewind",
+          "play_pause",
+          "fast_forward"
+         ],
+         [
+          "netflix",
+          "disney",
+          "numbers"
+         ]
+        ],
+        "platform": "Samsung TV",
+        "custom_actions": [
+         {
+          "name": "back",
+          "icon": "mdi:arrow-left-top",
+          "tap_action": {
+           "action": "call-service",
+           "service": "remote.send_command",
+           "target": {
+            "entity_id": "remote.samsung_cu7100_65_tv"
+           },
+           "data": {
+            "command": "KEY_RETURN"
+           }
+          }
+         },
+         {
+          "name": "netflix",
+          "icon": "mdi:netflix",
+          "tap_action": {
+           "action": "call-service",
+           "service": "media_player.select_source",
+           "target": {
+            "entity_id": "media_player.samsung_cu7100_65_tv_3"
+           },
+           "data": {
+            "source": "Netflix"
+           }
+          }
+         },
+         {
+          "name": "disney",
+          "icon": "mdi:castle",
+          "tap_action": {
+           "action": "call-service",
+           "service": "media_player.select_source",
+           "target": {
+            "entity_id": "media_player.samsung_cu7100_65_tv_3"
+           },
+           "data": {
+            "source": "Disney+"
+           }
+          }
+         },
+         {
+          "name": "numbers",
+          "icon": "mdi:dialpad",
+          "tap_action": {
+           "action": "fire-dom-event",
+           "browser_mod": {
+            "service": "browser_mod.popup",
+            "data": {
+             "title": "מספרים",
+             "size": "normal",
+             "content": {
+              "type": "custom:universal-remote-card",
+              "platform": "Samsung TV",
+              "remote_id": "remote.samsung_cu7100_65_tv",
+              "media_player_id": "media_player.samsung_cu7100_65_tv_3",
+              "haptics": true,
+              "custom_actions": [],
+              "rows": [
+               [
+                "n7",
+                "n8",
+                "n9"
+               ],
+               [
+                "n4",
+                "n5",
+                "n6"
+               ],
+               [
+                "n1",
+                "n2",
+                "n3"
+               ],
+               [
+                null,
+                "n0",
+                null
+               ]
+              ]
+             }
+            }
+           }
+          }
+         }
+        ],
+        "remote_id": "remote.samsung_cu7100_65_tv",
+        "media_player_id": "media_player.samsung_cu7100_65_tv_3",
+        "haptics": true,
+        "styles": "\nha-card { border-radius: 24px !important; box-shadow: none !important; padding: 18px 14px 20px !important;\n  gap: 8px; --lovelace-background: var(--primary-background-color); }\n.row { width: 100%; box-sizing: border-box; padding: 6px 4px; gap: 10px; }\nremote-button { width: 56px; height: 56px; flex: 0 0 56px; --icon-size: 26px; }\nremote-button::part(button) { background: var(--primary-background-color); border-radius: 50%; }\n.empty-button { width: 56px; height: 56px; flex: 0 0 56px; }\n#power { --icon-color: var(--error-color); }\n#power::part(button) { background: color-mix(in srgb, var(--error-color) 18%, var(--card-background-color)); }\nremote-slider { flex: 1 1 auto; --color: #0A6FD1; --height: 44px; }\nremote-circlepad { width: 264px; --black-color: transparent; --icon-size: 30px;\n  --icon-color: var(--secondary-text-color); }\nremote-circlepad::part(center) { --icon-color: #0A6FD1; }\n",
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "entity": "input_boolean.tv_device_mode",
+         "state": "on"
+        },
+        {
+         "entity": "input_boolean.tv_navigation_mode",
+         "state": "off"
+        }
+       ],
+       "card": {
+        "type": "custom:universal-remote-card",
+        "rows": [
+         [
+          "touchpad"
+         ],
+         [
+          "back",
+          "power",
+          "home"
+         ],
+         [
+          "volume_down",
+          "slider",
+          "volume_up"
+         ],
+         [
+          "previous",
+          "play_pause",
+          "next"
+         ],
+         [
+          "netflix",
+          "disney"
+         ],
+         [
+          "keyboard",
+          "numbers",
+          "search"
+         ]
+        ],
+        "platform": "Android TV",
+        "custom_actions": [
+         {
+          "name": "netflix",
+          "icon": "mdi:netflix",
+          "tap_action": {
+           "action": "call-service",
+           "service": "media_player.play_media",
+           "target": {
+            "entity_id": "media_player.partnertv_box"
+           },
+           "data": {
+            "media_content_type": "url",
+            "media_content_id": "https://www.netflix.com/"
+           }
+          }
+         },
+         {
+          "name": "disney",
+          "icon": "mdi:castle",
+          "tap_action": {
+           "action": "call-service",
+           "service": "media_player.play_media",
+           "target": {
+            "entity_id": "media_player.partnertv_box"
+           },
+           "data": {
+            "media_content_type": "url",
+            "media_content_id": "https://www.disneyplus.com/"
+           }
+          }
+         },
+         {
+          "name": "numbers",
+          "icon": "mdi:dialpad",
+          "tap_action": {
+           "action": "fire-dom-event",
+           "browser_mod": {
+            "service": "browser_mod.popup",
+            "data": {
+             "title": "מספרים",
+             "size": "normal",
+             "content": {
+              "type": "custom:universal-remote-card",
+              "platform": "Android TV",
+              "remote_id": "remote.partnertv_box",
+              "media_player_id": "media_player.partnertv_box",
+              "haptics": true,
+              "custom_actions": [],
+              "rows": [
+               [
+                "n7",
+                "n8",
+                "n9"
+               ],
+               [
+                "n4",
+                "n5",
+                "n6"
+               ],
+               [
+                "n1",
+                "n2",
+                "n3"
+               ],
+               [
+                null,
+                "n0",
+                null
+               ]
+              ]
+             }
+            }
+           }
+          }
+         }
+        ],
+        "remote_id": "remote.partnertv_box",
+        "media_player_id": "media_player.partnertv_box",
+        "haptics": true,
+        "styles": "\nha-card { border-radius: 24px !important; box-shadow: none !important; padding: 18px 14px 20px !important;\n  gap: 8px; --lovelace-background: var(--primary-background-color); }\n.row { width: 100%; box-sizing: border-box; padding: 6px 4px; gap: 10px; }\nremote-button { width: 56px; height: 56px; flex: 0 0 56px; --icon-size: 26px; }\nremote-button::part(button) { background: var(--primary-background-color); border-radius: 50%; }\n.empty-button { width: 56px; height: 56px; flex: 0 0 56px; }\n#power { --icon-color: var(--error-color); }\n#power::part(button) { background: color-mix(in srgb, var(--error-color) 18%, var(--card-background-color)); }\nremote-slider { flex: 1 1 auto; --color: #0A6FD1; --height: 44px; }\nremote-circlepad { width: 264px; --black-color: transparent; --icon-size: 30px;\n  --icon-color: var(--secondary-text-color); }\nremote-circlepad::part(center) { --icon-color: #0A6FD1; }\n",
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "entity": "input_boolean.tv_device_mode",
+         "state": "on"
+        },
+        {
+         "entity": "input_boolean.tv_navigation_mode",
+         "state": "on"
+        }
+       ],
+       "card": {
+        "type": "custom:universal-remote-card",
+        "rows": [
+         [
+          "circlepad"
+         ],
+         [
+          "back",
+          "power",
+          "home"
+         ],
+         [
+          "volume_down",
+          "slider",
+          "volume_up"
+         ],
+         [
+          "previous",
+          "play_pause",
+          "next"
+         ],
+         [
+          "netflix",
+          "disney"
+         ],
+         [
+          "keyboard",
+          "numbers",
+          "search"
+         ]
+        ],
+        "platform": "Android TV",
+        "custom_actions": [
+         {
+          "name": "netflix",
+          "icon": "mdi:netflix",
+          "tap_action": {
+           "action": "call-service",
+           "service": "media_player.play_media",
+           "target": {
+            "entity_id": "media_player.partnertv_box"
+           },
+           "data": {
+            "media_content_type": "url",
+            "media_content_id": "https://www.netflix.com/"
+           }
+          }
+         },
+         {
+          "name": "disney",
+          "icon": "mdi:castle",
+          "tap_action": {
+           "action": "call-service",
+           "service": "media_player.play_media",
+           "target": {
+            "entity_id": "media_player.partnertv_box"
+           },
+           "data": {
+            "media_content_type": "url",
+            "media_content_id": "https://www.disneyplus.com/"
+           }
+          }
+         },
+         {
+          "name": "numbers",
+          "icon": "mdi:dialpad",
+          "tap_action": {
+           "action": "fire-dom-event",
+           "browser_mod": {
+            "service": "browser_mod.popup",
+            "data": {
+             "title": "מספרים",
+             "size": "normal",
+             "content": {
+              "type": "custom:universal-remote-card",
+              "platform": "Android TV",
+              "remote_id": "remote.partnertv_box",
+              "media_player_id": "media_player.partnertv_box",
+              "haptics": true,
+              "custom_actions": [],
+              "rows": [
+               [
+                "n7",
+                "n8",
+                "n9"
+               ],
+               [
+                "n4",
+                "n5",
+                "n6"
+               ],
+               [
+                "n1",
+                "n2",
+                "n3"
+               ],
+               [
+                null,
+                "n0",
+                null
+               ]
+              ]
+             }
+            }
+           }
+          }
+         }
+        ],
+        "remote_id": "remote.partnertv_box",
+        "media_player_id": "media_player.partnertv_box",
+        "haptics": true,
+        "styles": "\nha-card { border-radius: 24px !important; box-shadow: none !important; padding: 18px 14px 20px !important;\n  gap: 8px; --lovelace-background: var(--primary-background-color); }\n.row { width: 100%; box-sizing: border-box; padding: 6px 4px; gap: 10px; }\nremote-button { width: 56px; height: 56px; flex: 0 0 56px; --icon-size: 26px; }\nremote-button::part(button) { background: var(--primary-background-color); border-radius: 50%; }\n.empty-button { width: 56px; height: 56px; flex: 0 0 56px; }\n#power { --icon-color: var(--error-color); }\n#power::part(button) { background: color-mix(in srgb, var(--error-color) 18%, var(--card-background-color)); }\nremote-slider { flex: 1 1 auto; --color: #0A6FD1; --height: 44px; }\nremote-circlepad { width: 264px; --black-color: transparent; --icon-size: 30px;\n  --icon-color: var(--secondary-text-color); }\nremote-circlepad::part(center) { --icon-color: #0A6FD1; }\n",
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      }
+     ]
+    }
+   ],
+   "subview": true,
+   "back_path": "/lovelace/home"
+  },
+  {
+   "type": "sections",
+   "title": "דוד מים",
+   "path": "boiler",
+   "icon": "mdi:water-boiler",
+   "max_columns": 1,
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "דוד מים",
+       "subtitle": "{% if is_state('switch.notes_boiler', 'on') %}פועל · נותרו {% set t = states('sensor.notes_boiler_remaining_time') %}{% if t.count(':') == 2 %}{% set p = t.split(':') %}{{ p[0] | int(0) * 60 + p[1] | int(0) }} דק'{% else %}{{ t }}{% endif %}{% else %}כבוי{% endif %}{% if is_state('binary_sensor.boiler_daily_schedule', 'on') %} · תזמון יומי פעיל{% endif %}",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --title-font-size: 22px; --title-font-weight: 700; --title-line-height: 1.2; --subtitle-font-size: 13px; --subtitle-line-height: 1.4; --title-padding: 8px 4px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "justify",
+       "chips": [
+        {
+         "type": "template",
+         "icon": "mdi:snowflake",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/home"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:water-boiler",
+         "content": "דוד מים",
+         "icon_color": "white",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/boiler"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: #0A6FD1; --text-color: #fff; --primary-text-color: #fff; --color: #fff; font-weight: 600; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:robot-vacuum",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/vacuum"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:television",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/tv"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:stove",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/oven"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { direction: rtl; --chip-height: 48px; --chip-border-radius: 24px; --chip-icon-size: 22px; --chip-font-size: 15px; --chip-font-weight: 600; --chip-spacing: 8px; --chip-background: var(--card-background-color); --chip-box-shadow: none; --chip-border-width: 0; padding: 4px 0 6px; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px; }\n.chip-container > :nth-child(1) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(2) { flex: 1 1 auto; min-width: 0; }\n.chip-container > :nth-child(3) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(4) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(5) { flex: 0 0 48px; min-width: 0; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "{{ 'פועל' if is_state('switch.notes_boiler', 'on') else 'כבוי' }}",
+       "secondary": "{% if is_state('switch.notes_boiler', 'on') %}נותרו {% set t = states('sensor.notes_boiler_remaining_time') %}{% if t.count(':') == 2 %}{% set p = t.split(':') %}{{ p[0] | int(0) * 60 + p[1] | int(0) }} דק'{% else %}{{ t }}{% endif %}{% else %}הקש להפעלה{% endif %}",
+       "icon": "mdi:water-boiler",
+       "tap_action": {
+        "action": "call-service",
+        "service": "switch.toggle",
+        "target": {
+         "entity_id": "switch.notes_boiler"
+        },
+        "haptic": "medium"
+       },
+       "hold_action": {
+        "action": "more-info",
+        "entity": "switch.notes_boiler"
+       },
+       "color": "{{ 'blue' if is_state('switch.notes_boiler', 'on') else 'grey' }}",
+       "vertical": true,
+       "multiline_secondary": true,
+       "card_mod": {
+        "style": ":host { display: block; }\nha-card { width: 216px !important; height: 216px !important; margin: 14px auto 10px; direction: rtl; box-sizing: border-box; border-radius: 50% !important; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-shadow: none !important; transition: background .3s, border-color .3s; background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('switch.notes_boiler', 'on') else 'var(--card-background-color)' }} !important; border: 6px solid {{ '#0A6FD1' if is_state('switch.notes_boiler', 'on') else 'var(--divider-color)' }} !important; --ha-tile-info-primary-font-size: 22px; --ha-tile-info-primary-font-weight: 600; --ha-tile-info-primary-line-height: 30px; --ha-tile-info-secondary-font-size: 13px; }\nha-tile-icon { --tile-icon-size: 64px; --mdc-icon-size: 36px; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "tile",
+       "entity": "input_number.boiler_timer_minutes",
+       "name": "זמן הפעלה",
+       "icon": "mdi:timer-outline",
+       "features": [
+        {
+         "type": "numeric-input"
+        }
+       ],
+       "features_position": "bottom",
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { --tile-color: #0A6FD1 !important; --feature-border-radius: 14px; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "הפעל דוד · {{ states('input_number.boiler_timer_minutes') | int(0) }} דקות",
+       "icon": "mdi:play-circle",
+       "tap_action": {
+        "action": "call-service",
+        "service": "script.boiler_start_with_selected_timer",
+        "haptic": "heavy"
+       },
+       "color": "white",
+       "card_mod": {
+        "style": "ha-card { background: #0A6FD1 !important; border: none !important; border-radius: 24px !important; box-shadow: none !important; min-height: 56px; --primary-text-color: #fff; --secondary-text-color: rgba(255,255,255,.8); --ha-tile-info-primary-font-size: 16px; --ha-tile-info-primary-font-weight: 600; direction: rtl; }\nha-card:active { transform: scale(.98); }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      }
+     ]
+    }
+   ],
+   "subview": true,
+   "back_path": "/lovelace/home"
+  },
+  {
+   "type": "sections",
+   "title": "תנור",
+   "path": "oven",
+   "icon": "mdi:stove",
+   "max_columns": 1,
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "תנור",
+       "subtitle": "{% if states('sensor.tnvr_machine_state') in ['run', 'running'] %}פועל · {{ state_translated('sensor.tnvr_oven_mode') }} · {{ states('sensor.tnvr_temperature') }}°C ← {{ states('sensor.tnvr_setpoint') }}°C{% else %}כבוי{% endif %}",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --title-font-size: 22px; --title-font-weight: 700; --title-line-height: 1.2; --subtitle-font-size: 13px; --subtitle-line-height: 1.4; --title-padding: 8px 4px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-chips-card",
+       "alignment": "justify",
+       "chips": [
+        {
+         "type": "template",
+         "icon": "mdi:snowflake",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/home"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:water-boiler",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/boiler"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:robot-vacuum",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/vacuum"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:television",
+         "content": "",
+         "icon_color": "disabled",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/tv"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-padding: 0; }\n"
+         }
+        },
+        {
+         "type": "template",
+         "icon": "mdi:stove",
+         "content": "תנור",
+         "icon_color": "white",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/lovelace/oven"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": ":host { display: block; width: 100%; }\n.content { gap: 6px; }\n.content > * { margin: 0 !important; }\nha-card { width: 100%; box-sizing: border-box; justify-content: center; --chip-background: #0A6FD1; --text-color: #fff; --primary-text-color: #fff; --color: #fff; font-weight: 600; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { direction: rtl; --chip-height: 48px; --chip-border-radius: 24px; --chip-icon-size: 22px; --chip-font-size: 15px; --chip-font-weight: 600; --chip-spacing: 8px; --chip-background: var(--card-background-color); --chip-box-shadow: none; --chip-border-width: 0; padding: 4px 0 6px; }\n.chip-container { flex-wrap: nowrap !important; gap: 8px; }\n.chip-container > :nth-child(1) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(2) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(3) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(4) { flex: 0 0 48px; min-width: 0; }\n.chip-container > :nth-child(5) { flex: 1 1 auto; min-width: 0; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "{% if states('sensor.tnvr_machine_state') in ['run', 'running'] %}{{ states('sensor.tnvr_temperature') }}°C{% else %}כבוי{% endif %}",
+       "secondary": "{% if states('sensor.tnvr_machine_state') in ['run', 'running'] %}{{ state_translated('sensor.tnvr_oven_mode') }}\nיעד {{ states('sensor.tnvr_setpoint') }}°C{% else %}תא ראשי{% endif %}",
+       "icon": "mdi:stove",
+       "tap_action": {
+        "action": "more-info",
+        "entity": "sensor.tnvr_machine_state"
+       },
+       "color": "{{ 'orange' if states('sensor.tnvr_machine_state') in ['run', 'running'] else 'grey' }}",
+       "vertical": true,
+       "multiline_secondary": true,
+       "card_mod": {
+        "style": ":host { display: block; }\nha-card { width: 216px !important; height: 216px !important; margin: 14px auto 10px; direction: rtl; box-sizing: border-box; border-radius: 50% !important; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-shadow: none !important; transition: background .3s, border-color .3s; background: {{ 'color-mix(in srgb, #E8710A 24%, var(--card-background-color))' if states('sensor.tnvr_machine_state') in ['run', 'running'] else 'var(--card-background-color)' }} !important; border: 6px solid {{ '#E8710A' if states('sensor.tnvr_machine_state') in ['run', 'running'] else 'var(--divider-color)' }} !important; --ha-tile-info-primary-font-size: 22px; --ha-tile-info-primary-font-weight: 600; --ha-tile-info-primary-line-height: 30px; --ha-tile-info-secondary-font-size: 13px; }\nha-tile-icon { --tile-icon-size: 64px; --mdc-icon-size: 36px; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "sensor.tnvr_machine_state",
+         "state": [
+          "run",
+          "running"
+         ]
+        }
+       ],
+       "card": {
+        "type": "custom:mushroom-template-card",
+        "primary": "זמן סיום",
+        "secondary": "{% set t = states('sensor.tnvr_completion_time') | as_datetime %}{{ (t | as_local).strftime('%H:%M') if t else '—' }}",
+        "icon": "mdi:timer-sand",
+        "color": "purple",
+        "tap_action": {
+         "action": "more-info",
+         "entity": "sensor.tnvr_completion_time"
+        },
+        "card_mod": {
+         "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "conditional",
+       "conditions": [
+        {
+         "condition": "state",
+         "entity": "binary_sensor.tnvr_second_cavity_status",
+         "state": "on"
+        }
+       ],
+       "card": {
+        "type": "custom:mushroom-template-card",
+        "primary": "זמן סיום · תא שני",
+        "secondary": "{% set t = states('sensor.tnvr_second_cavity_completion_time') | as_datetime %}{{ (t | as_local).strftime('%H:%M') if t else '—' }}",
+        "icon": "mdi:timer-sand",
+        "color": "purple",
+        "tap_action": {
+         "action": "more-info",
+         "entity": "sensor.tnvr_second_cavity_completion_time"
+        },
+        "card_mod": {
+         "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\n"
+        },
+        "grid_options": {
+         "columns": "full",
+         "rows": "auto"
+        }
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "עצור",
+       "icon": "mdi:stop-circle",
+       "tap_action": {
+        "action": "call-service",
+        "service": "button.press",
+        "target": {
+         "entity_id": "button.tnvr_stop"
+        },
+        "haptic": "heavy"
+       },
+       "color": "red",
+       "grid_options": {
+        "columns": 6,
+        "rows": "auto"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card:active { transform: scale(.97); }\n"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "תאורה",
+       "icon": "{% if is_state('light.tnvr_light', 'on') %}mdi:lightbulb-on{% else %}mdi:lightbulb-outline{% endif %}",
+       "tap_action": {
+        "action": "call-service",
+        "service": "light.toggle",
+        "target": {
+         "entity_id": "light.tnvr_light"
+        },
+        "haptic": "medium"
+       },
+       "color": "{{ 'amber' if is_state('light.tnvr_light', 'on') else 'grey' }}",
+       "secondary": "{{ 'דולקת' if is_state('light.tnvr_light', 'on') else 'כבויה' }}",
+       "hold_action": {
+        "action": "more-info",
+        "entity": "light.tnvr_light"
+       },
+       "grid_options": {
+        "columns": 6,
+        "rows": "auto"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { background: {{ 'color-mix(in srgb, #F2B705 22%, var(--card-background-color))' if is_state('light.tnvr_light', 'on') else 'var(--card-background-color)' }} !important; }\nha-card:active { transform: scale(.97); }\n"
+       }
+      }
+     ]
+    }
+   ],
+   "subview": true,
+   "back_path": "/lovelace/home"
+  }
+ ]
+}
