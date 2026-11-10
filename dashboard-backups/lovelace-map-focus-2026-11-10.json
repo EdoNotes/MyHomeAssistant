@@ -13,7 +13,7 @@
    "cards": [
     {
      "type": "iframe",
-     "url": "/local/map_focus.html?v=20261110a&p=both",
+     "url": "/local/map_focus.html?v=20261110b&p=both",
      "aspect_ratio": "100%",
      "card_mod": {
       "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
@@ -34,7 +34,7 @@
    "cards": [
     {
      "type": "iframe",
-     "url": "/local/map_focus.html?v=20261110a&p=edo",
+     "url": "/local/map_focus.html?v=20261110b&p=edo",
      "aspect_ratio": "100%",
      "card_mod": {
       "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
@@ -57,7 +57,7 @@
    "cards": [
     {
      "type": "iframe",
-     "url": "/local/map_focus.html?v=20261110a&p=hen",
+     "url": "/local/map_focus.html?v=20261110b&p=hen",
      "aspect_ratio": "100%",
      "card_mod": {
       "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
@@ -80,7 +80,7 @@
    "cards": [
     {
      "type": "iframe",
-     "url": "/local/map_focus.html?v=20261110a&p=edo-day",
+     "url": "/local/map_focus.html?v=20261110b&p=edo-day",
      "aspect_ratio": "100%",
      "card_mod": {
       "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
@@ -103,7 +103,7 @@
    "cards": [
     {
      "type": "iframe",
-     "url": "/local/map_focus.html?v=20261110a&p=hen-day",
+     "url": "/local/map_focus.html?v=20261110b&p=hen-day",
      "aspect_ratio": "100%",
      "card_mod": {
       "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"

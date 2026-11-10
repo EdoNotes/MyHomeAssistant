@@ -168,3 +168,76 @@
       title: Daily Update Check Complete
       message: No updates available at {{ now().strftime('%Y-%m-%d %H:%M') }}
   mode: single
+- id: presence_hen_left_work
+  alias: Presence - Hen Left Work
+  description: Tells Edo's phone when Hen leaves her work zone (at most once per 30 minutes)
+  triggers:
+  - trigger: zone
+    entity_id: person.hen
+    zone: zone.khn_bvdh
+    event: leave
+  conditions:
+  - condition: template
+    value_template: '{{ this.attributes.last_triggered is none or (now() - this.attributes.last_triggered).total_seconds() > 1800 }}'
+  actions:
+  - action: notify.mobile_app_sm_s942b
+    data:
+      title: חן יצאה מהעבודה
+      message: >-
+        {% set m = states('sensor.waze_hen_to_home') | float(0) | round %}
+        {{ 'כ-' ~ m ~ " דק' נסיעה הביתה" if m > 0 else 'בדרך' }}
+      data:
+        tag: presence_hen
+        clickAction: /dashboard-map/hen
+  mode: single
+- id: presence_hen_near_home
+  alias: Presence - Hen Approaching Home
+  description: Tells Edo's phone when Hen gets within 2 km of home on her way back (at most once per 30 minutes)
+  triggers:
+  - trigger: numeric_state
+    entity_id: sensor.byt_hen_s_phone_distance
+    below: 2000
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: person.hen
+      state: home
+  - condition: state
+    entity_id: sensor.byt_hen_s_phone_direction_of_travel
+    state: towards
+  - condition: template
+    value_template: '{{ this.attributes.last_triggered is none or (now() - this.attributes.last_triggered).total_seconds() > 1800 }}'
+  actions:
+  - action: notify.mobile_app_sm_s942b
+    data:
+      title: חן מתקרבת הביתה
+      message: "{{ (states('sensor.byt_hen_s_phone_distance') | float(0) / 1000) | round(1) }} ק\"מ מהבית"
+      data:
+        tag: presence_hen
+        clickAction: /dashboard-map/hen
+  mode: single
+- id: presence_hen_phone_battery_low
+  alias: Presence - Hen Phone Battery Low
+  description: Tells Edo's phone when Hen's phone drops below 15% and is not charging
+  triggers:
+  - trigger: numeric_state
+    entity_id: sensor.sm_s918b_battery_level
+    below: 15
+  conditions:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.sm_s918b_battery_state
+      state:
+      - charging
+      - full
+  actions:
+  - action: notify.mobile_app_sm_s942b
+    data:
+      title: הסוללה של חן נמוכה
+      message: "{{ states('sensor.sm_s918b_battery_level') }}% · {{ 'בבית' if is_state('person.hen', 'home') else 'מחוץ לבית' }}"
+      data:
+        tag: battery_hen
+        clickAction: /dashboard-map/hen
+  mode: single

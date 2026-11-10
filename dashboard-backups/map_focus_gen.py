@@ -11,7 +11,7 @@ to exactly the same user(s) as before.
 import json
 import sys
 
-VER = "20261110a"          # bump to bust the browser cache of the page
+VER = "20261110b"          # bump to bust the browser cache of the page
 
 CARD_STYLE = (
     "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;"

@@ -149,8 +149,11 @@
       const low = sn.bat != null && sn.bat <= 20 && sn.batState !== 'charging';
       const batNote = sn.batState === 'charging' ? 'בטעינה' : sn.batState === 'full' ? 'מלאה' : low ? 'נמוכה' : '';
       kids.push(el('div', { class: 'grid' }, [
-        tile('clock', sn.away ? 'בחוץ מאז' : 'כאן מאז', el('div', { class: 'tv' }, [el('b', { text: t ? (dayWord(t).trim() || MF.hm(t)) : '00:00' }),
-          el('span', { text: t ? (dayWord(t) ? MF.hm(t) : MF.dur(Date.now() - t)) : 'כל היום' })])),
+        sn.eta != null
+          ? tile('car', 'הגעה הביתה', el('div', { class: 'tv' }, [el('b', { text: MF.hm(Date.now() + sn.eta * 60000) }),
+            el('span', { text: MF.dur(sn.eta * 60000) })]))
+          : tile('clock', sn.away ? 'בחוץ מאז' : 'כאן מאז', el('div', { class: 'tv' }, [el('b', { text: t ? (dayWord(t).trim() || MF.hm(t)) : '00:00' }),
+            el('span', { text: t ? (dayWord(t) ? MF.hm(t) : MF.dur(Date.now() - t)) : 'כל היום' })])),
         tile('home', 'מרחק מהבית', el('div', { class: 'tv' }, [el('b', { text: d[0] }), el('span', { text: [d[1], dirTxt].filter(Boolean).join(' · ') })])),
         tile(MF.batIcon(sn.bat).replace(/"18"/g, '"15"'), 'סוללה', [
           el('div', { class: 'tv' }, [el('b', { text: sn.bat == null ? '—' : sn.bat + '%' }), el('span', { text: batNote })]),

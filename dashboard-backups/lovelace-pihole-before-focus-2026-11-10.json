@@ -1,0 +1,136 @@
+{
+ "views": [
+  {
+   "title": "Pi-hole",
+   "path": "pihole",
+   "icon": "mdi:pi-hole",
+   "cards": [
+    {
+     "type": "entities",
+     "title": "Pi-hole Status",
+     "entities": [
+      {
+       "entity": "binary_sensor.pi_hole_status",
+       "name": "Status"
+      },
+      {
+       "entity": "switch.pi_hole",
+       "name": "Protection"
+      },
+      {
+       "entity": "sensor.pi_hole_ads_percentage_blocked",
+       "name": "Percentage Blocked"
+      }
+     ]
+    },
+    {
+     "type": "gauge",
+     "title": "Blocking Percentage",
+     "entity": "sensor.pi_hole_ads_percentage_blocked",
+     "min": 0,
+     "max": 100,
+     "severity": {
+      "green": 20,
+      "yellow": 10,
+      "red": 0
+     }
+    },
+    {
+     "type": "glance",
+     "title": "Pi-hole Statistics",
+     "entities": [
+      {
+       "entity": "sensor.pi_hole_ads_blocked",
+       "name": "Ads Blocked"
+      },
+      {
+       "entity": "sensor.pi_hole_dns_queries",
+       "name": "DNS Queries"
+      },
+      {
+       "entity": "sensor.pi_hole_dns_unique_clients",
+       "name": "Clients"
+      },
+      {
+       "entity": "sensor.pi_hole_dns_unique_domains",
+       "name": "Domains"
+      }
+     ]
+    },
+    {
+     "type": "history-graph",
+     "title": "DNS Activity",
+     "entities": [
+      {
+       "entity": "sensor.pi_hole_dns_queries"
+      },
+      {
+       "entity": "sensor.pi_hole_dns_queries_cached"
+      },
+      {
+       "entity": "sensor.pi_hole_ads_percentage_blocked"
+      }
+     ],
+     "hours_to_show": 24
+    },
+    {
+     "type": "entities",
+     "title": "Network Information",
+     "entities": [
+      {
+       "entity": "sensor.pi_hole_domains_blocked",
+       "name": "Domains on Blocklist"
+      },
+      {
+       "entity": "sensor.pi_hole_seen_clients",
+       "name": "Seen Clients"
+      },
+      {
+       "entity": "sensor.pi_hole_dns_queries_cached",
+       "name": "Cached Queries"
+      },
+      {
+       "entity": "sensor.pi_hole_dns_queries_forwarded",
+       "name": "Forwarded Queries"
+      }
+     ]
+    },
+    {
+     "type": "entities",
+     "title": "Updates",
+     "entities": [
+      {
+       "entity": "update.pi_hole_core_update_available",
+       "name": "Core Update"
+      },
+      {
+       "entity": "update.pi_hole_ftl_update_available",
+       "name": "FTL Update"
+      },
+      {
+       "entity": "update.pi_hole_web_update_available",
+       "name": "Web Update"
+      }
+     ]
+    },
+    {
+     "type": "iframe",
+     "title": "📶 מכשירים מחוברים לרשת",
+     "url": "/local/wifi_devices.html",
+     "aspect_ratio": "100%"
+    },
+    {
+     "type": "iframe",
+     "title": "אתרים נפוצים לפי מכשיר",
+     "url": "/local/pihole_top_sites.html?v=1780540000",
+     "aspect_ratio": "200%"
+    }
+   ],
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ]
+  }
+ ]
+}

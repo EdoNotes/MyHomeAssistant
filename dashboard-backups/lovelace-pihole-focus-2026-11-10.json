@@ -1,0 +1,492 @@
+{
+ "views": [
+  {
+   "type": "sections",
+   "title": "Pi-hole",
+   "path": "pihole",
+   "icon": "mdi:pi-hole",
+   "max_columns": 1,
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "sections": [
+    {
+     "type": "grid",
+     "cards": [
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "Pi-hole",
+       "subtitle": "{% if is_state('binary_sensor.pi_hole_status', 'on') %}{{ 'ההגנה פעילה' if is_state('switch.pi_hole', 'on') else 'ההגנה כבויה' }} · {{ '{:,}'.format(states('sensor.pi_hole_ads_blocked') | int(0)) }} חסימות היום{% else %}השירות לא זמין{% endif %}",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --title-font-size: 22px; --title-font-weight: 700; --title-line-height: 1.2; --subtitle-font-size: 13px; --subtitle-line-height: 1.4; --title-padding: 8px 4px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "{% if is_state('switch.pi_hole', 'on') %}{{ states('sensor.pi_hole_ads_percentage_blocked') | float(0) | round(1) }}%{% else %}כבויה{% endif %}",
+       "secondary": "{{ 'מהשאילתות נחסמו' if is_state('switch.pi_hole', 'on') else 'הקש להפעלת ההגנה' }}",
+       "icon": "{{ 'mdi:shield-check' if is_state('switch.pi_hole', 'on') else 'mdi:shield-off-outline' }}",
+       "color": "{{ 'blue' if is_state('switch.pi_hole', 'on') else 'grey' }}",
+       "vertical": true,
+       "multiline_secondary": true,
+       "tap_action": {
+        "action": "call-service",
+        "service": "switch.toggle",
+        "target": {
+         "entity_id": "switch.pi_hole"
+        },
+        "haptic": "medium",
+        "confirmation": {
+         "text": "להפעיל או לכבות את חסימת הפרסומות של Pi-hole?"
+        }
+       },
+       "hold_action": {
+        "action": "more-info",
+        "entity": "switch.pi_hole"
+       },
+       "card_mod": {
+        "style": ":host { display: block; }\nha-card { width: 216px !important; height: 216px !important; margin: 14px auto 10px; direction: rtl; box-sizing: border-box; border-radius: 50% !important; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; box-shadow: none !important; transition: background .3s, border-color .3s; background: {{ 'color-mix(in srgb, #0A6FD1 24%, var(--card-background-color))' if is_state('switch.pi_hole', 'on') else 'var(--card-background-color)' }} !important; border: 6px solid {{ '#0A6FD1' if is_state('switch.pi_hole', 'on') else 'var(--divider-color)' }} !important; --ha-tile-info-primary-font-size: 30px; --ha-tile-info-primary-font-weight: 600; --ha-tile-info-primary-line-height: 38px; --ha-tile-info-secondary-font-size: 13px; }\nha-tile-icon { --tile-icon-size: 64px; --mdc-icon-size: 36px; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "{{ '{:,}'.format(states('sensor.pi_hole_dns_queries') | int(0)) }}",
+       "secondary": "שאילתות DNS",
+       "icon": "mdi:dns-outline",
+       "color": "blue",
+       "tap_action": {
+        "action": "more-info",
+        "entity": "sensor.pi_hole_dns_queries"
+       },
+       "hold_action": {
+        "action": "none"
+       },
+       "double_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { --ha-tile-info-primary-font-size: 20px; --ha-tile-info-primary-font-weight: 600; --ha-tile-info-primary-line-height: 26px; --ha-tile-info-secondary-font-size: 12px; }\n"
+       },
+       "grid_options": {
+        "columns": 6,
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "{{ '{:,}'.format(states('sensor.pi_hole_ads_blocked') | int(0)) }}",
+       "secondary": "נחסמו",
+       "icon": "mdi:shield-check-outline",
+       "color": "blue",
+       "tap_action": {
+        "action": "more-info",
+        "entity": "sensor.pi_hole_ads_blocked"
+       },
+       "hold_action": {
+        "action": "none"
+       },
+       "double_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { --ha-tile-info-primary-font-size: 20px; --ha-tile-info-primary-font-weight: 600; --ha-tile-info-primary-line-height: 26px; --ha-tile-info-secondary-font-size: 12px; }\n"
+       },
+       "grid_options": {
+        "columns": 6,
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "{{ '{:,}'.format(states('sensor.pi_hole_dns_unique_clients') | int(0)) }}",
+       "secondary": "מכשירים פעילים",
+       "icon": "mdi:devices",
+       "color": "blue",
+       "tap_action": {
+        "action": "more-info",
+        "entity": "sensor.pi_hole_dns_unique_clients"
+       },
+       "hold_action": {
+        "action": "none"
+       },
+       "double_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { --ha-tile-info-primary-font-size: 20px; --ha-tile-info-primary-font-weight: 600; --ha-tile-info-primary-line-height: 26px; --ha-tile-info-secondary-font-size: 12px; }\n"
+       },
+       "grid_options": {
+        "columns": 6,
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-template-card",
+       "primary": "{{ '{:,}'.format(states('sensor.pi_hole_dns_unique_domains') | int(0)) }}",
+       "secondary": "דומיינים",
+       "icon": "mdi:web",
+       "color": "blue",
+       "tap_action": {
+        "action": "more-info",
+        "entity": "sensor.pi_hole_dns_unique_domains"
+       },
+       "hold_action": {
+        "action": "none"
+       },
+       "double_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { --ha-tile-info-primary-font-size: 20px; --ha-tile-info-primary-font-weight: 600; --ha-tile-info-primary-line-height: 26px; --ha-tile-info-secondary-font-size: 12px; }\n"
+       },
+       "grid_options": {
+        "columns": 6,
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "entities",
+       "show_header_toggle": false,
+       "entities": [
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "מכשירים מחוברים לרשת",
+         "secondary": "{{ states('sensor.pi_hole_seen_clients') }} מכשירים נראו ב-Pi-hole",
+         "icon": "mdi:wifi",
+         "color": "blue",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-pihiole/devices"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; direction: rtl; }\nha-card { border-bottom: 1px solid var(--divider-color) !important; }\nha-card { padding-inline-end: 40px; }\nha-card::after { content: ''; position: absolute; inset-inline-end: 12px; top: 50%; width: 9px; height: 9px; margin-top: -5px; pointer-events: none; border-top: 2px solid var(--secondary-text-color); border-left: 2px solid var(--secondary-text-color); transform: rotate(-45deg); }\n"
+         }
+        },
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "אתרים נפוצים לפי מכשיר",
+         "secondary": "הדומיינים המבוקשים ביותר",
+         "icon": "mdi:format-list-numbered-rtl",
+         "color": "blue",
+         "tap_action": {
+          "action": "navigate",
+          "navigation_path": "/dashboard-pihiole/sites"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; direction: rtl; }\nha-card { padding-inline-end: 40px; }\nha-card::after { content: ''; position: absolute; inset-inline-end: 12px; top: 50%; width: 9px; height: 9px; margin-top: -5px; pointer-events: none; border-top: 2px solid var(--secondary-text-color); border-left: 2px solid var(--secondary-text-color); transform: rotate(-45deg); }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\n.card-content { padding: 4px 12px !important; }\n#states > * { margin: 0 !important; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "",
+       "subtitle": "פעילות DNS · 24 שעות",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --subtitle-font-size: 13px; --subtitle-font-weight: 600; --title-padding: 6px 6px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "history-graph",
+       "hours_to_show": 24,
+       "entities": [
+        {
+         "entity": "sensor.pi_hole_dns_queries",
+         "name": "שאילתות"
+        },
+        {
+         "entity": "sensor.pi_hole_dns_queries_cached",
+         "name": "מהמטמון"
+        },
+        {
+         "entity": "sensor.pi_hole_ads_percentage_blocked",
+         "name": "אחוז חסימה"
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\nha-card { direction: ltr; padding-top: 8px; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "",
+       "subtitle": "רשת",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --subtitle-font-size: 13px; --subtitle-font-weight: 600; --title-padding: 6px 6px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "entities",
+       "show_header_toggle": false,
+       "entities": [
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "{{ '{:,}'.format(states('sensor.pi_hole_domains_blocked') | int(0)) }}",
+         "secondary": "דומיינים ברשימת החסימה",
+         "icon": "mdi:playlist-remove",
+         "color": "blue",
+         "tap_action": {
+          "action": "more-info",
+          "entity": "sensor.pi_hole_domains_blocked"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; direction: rtl; }\nha-card { border-bottom: 1px solid var(--divider-color) !important; }\n"
+         }
+        },
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "{{ '{:,}'.format(states('sensor.pi_hole_dns_queries_cached') | int(0)) }}",
+         "secondary": "שאילתות שנענו מהמטמון",
+         "icon": "mdi:cached",
+         "color": "blue",
+         "tap_action": {
+          "action": "more-info",
+          "entity": "sensor.pi_hole_dns_queries_cached"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; direction: rtl; }\nha-card { border-bottom: 1px solid var(--divider-color) !important; }\n"
+         }
+        },
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "{{ '{:,}'.format(states('sensor.pi_hole_dns_queries_forwarded') | int(0)) }}",
+         "secondary": "שאילתות שהועברו הלאה",
+         "icon": "mdi:arrow-top-left",
+         "color": "blue",
+         "tap_action": {
+          "action": "more-info",
+          "entity": "sensor.pi_hole_dns_queries_forwarded"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; direction: rtl; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\n.card-content { padding: 4px 12px !important; }\n#states > * { margin: 0 !important; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "custom:mushroom-title-card",
+       "title": "",
+       "subtitle": "עדכונים",
+       "title_tap_action": {
+        "action": "none"
+       },
+       "subtitle_tap_action": {
+        "action": "none"
+       },
+       "card_mod": {
+        "style": "ha-card { --subtitle-font-size: 13px; --subtitle-font-weight: 600; --title-padding: 6px 6px 0; --subtitle-color: var(--secondary-text-color); --title-spacing: 0px; direction: rtl; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      },
+      {
+       "type": "entities",
+       "show_header_toggle": false,
+       "entities": [
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "Core",
+         "secondary": "{{ 'יש עדכון · ' ~ state_attr('update.pi_hole_core_update_available', 'latest_version') if is_state('update.pi_hole_core_update_available', 'on') else 'מעודכן · ' ~ (state_attr('update.pi_hole_core_update_available', 'installed_version') or '') }}",
+         "icon": "{{ 'mdi:arrow-up-circle' if is_state('update.pi_hole_core_update_available', 'on') else 'mdi:check-circle-outline' }}",
+         "color": "{{ 'orange' if is_state('update.pi_hole_core_update_available', 'on') else 'grey' }}",
+         "tap_action": {
+          "action": "more-info",
+          "entity": "update.pi_hole_core_update_available"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; direction: rtl; }\nha-card { border-bottom: 1px solid var(--divider-color) !important; }\n"
+         }
+        },
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "FTL",
+         "secondary": "{{ 'יש עדכון · ' ~ state_attr('update.pi_hole_ftl_update_available', 'latest_version') if is_state('update.pi_hole_ftl_update_available', 'on') else 'מעודכן · ' ~ (state_attr('update.pi_hole_ftl_update_available', 'installed_version') or '') }}",
+         "icon": "{{ 'mdi:arrow-up-circle' if is_state('update.pi_hole_ftl_update_available', 'on') else 'mdi:check-circle-outline' }}",
+         "color": "{{ 'orange' if is_state('update.pi_hole_ftl_update_available', 'on') else 'grey' }}",
+         "tap_action": {
+          "action": "more-info",
+          "entity": "update.pi_hole_ftl_update_available"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; direction: rtl; }\nha-card { border-bottom: 1px solid var(--divider-color) !important; }\n"
+         }
+        },
+        {
+         "type": "custom:mushroom-template-card",
+         "primary": "Web",
+         "secondary": "{{ 'יש עדכון · ' ~ state_attr('update.pi_hole_web_update_available', 'latest_version') if is_state('update.pi_hole_web_update_available', 'on') else 'מעודכן · ' ~ (state_attr('update.pi_hole_web_update_available', 'installed_version') or '') }}",
+         "icon": "{{ 'mdi:arrow-up-circle' if is_state('update.pi_hole_web_update_available', 'on') else 'mdi:check-circle-outline' }}",
+         "color": "{{ 'orange' if is_state('update.pi_hole_web_update_available', 'on') else 'grey' }}",
+         "tap_action": {
+          "action": "more-info",
+          "entity": "update.pi_hole_web_update_available"
+         },
+         "hold_action": {
+          "action": "none"
+         },
+         "double_tap_action": {
+          "action": "none"
+         },
+         "card_mod": {
+          "style": "ha-card { background: none !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; position: relative; direction: rtl; }\n"
+         }
+        }
+       ],
+       "card_mod": {
+        "style": "ha-card { border-radius: 24px !important; box-shadow: none !important; direction: rtl; }\n.card-content { padding: 4px 12px !important; }\n#states > * { margin: 0 !important; }\n"
+       },
+       "grid_options": {
+        "columns": "full",
+        "rows": "auto"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "מכשירים ברשת",
+   "path": "devices",
+   "icon": "mdi:wifi",
+   "type": "panel",
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "/local/wifi_devices.html?v=focus1",
+     "aspect_ratio": "100%",
+     "card_mod": {
+      "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
+     }
+    }
+   ],
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "subview": true,
+   "back_path": "/dashboard-pihiole/pihole"
+  },
+  {
+   "title": "אתרים נפוצים",
+   "path": "sites",
+   "icon": "mdi:format-list-numbered-rtl",
+   "type": "panel",
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "/local/pihole_top_sites.html?v=focus1",
+     "aspect_ratio": "100%",
+     "card_mod": {
+      "style": "ha-card{border:none!important;border-radius:0!important;box-shadow:none!important;background:#181825!important;overflow:hidden!important}"
+     }
+    }
+   ],
+   "visible": [
+    {
+     "user": "e4b485812699470cbd570b2f15de4f32"
+    }
+   ],
+   "subview": true,
+   "back_path": "/dashboard-pihiole/pihole"
+  }
+ ]
+}

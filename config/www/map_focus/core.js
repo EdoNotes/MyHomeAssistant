@@ -8,11 +8,11 @@ window.MF = (function () {
     edo: { key: 'edo', name: 'עידו', init: 'ע', ring: '#89b4fa', fem: false, person: 'person.edonotes',
       dist: 'sensor.byt_edonotes_distance', dir: 'sensor.byt_edonotes_direction_of_travel',
       bat: 'sensor.sm_s942b_battery_level', batState: 'sensor.sm_s942b_battery_state',
-      geo: 'sensor.sm_s942b_geocoded_location', act: 'sensor.sm_s942b_detected_activity' },
+      geo: 'sensor.sm_s942b_geocoded_location', act: 'sensor.sm_s942b_detected_activity', eta: 'sensor.waze_edo_to_home' },
     hen: { key: 'hen', name: 'חן', init: 'ח', ring: '#f38ba8', fem: true, person: 'person.hen',
       dist: 'sensor.byt_hen_s_phone_distance', dir: 'sensor.byt_hen_s_phone_direction_of_travel',
       bat: 'sensor.sm_s918b_battery_level', batState: 'sensor.sm_s918b_battery_state',
-      geo: 'sensor.sm_s918b_geocoded_location', act: null },
+      geo: 'sensor.sm_s918b_geocoded_location', act: null, eta: 'sensor.waze_hen_to_home' },
   };
 
   /* ---------- Home Assistant access ---------- */
@@ -120,6 +120,8 @@ window.MF = (function () {
       dist: dist, dir: MF.val(p.dir), bat: bat == null ? null : Math.round(parseFloat(bat)),
       batState: MF.val(p.batState), addr: MF.val(p.geo), act: MF.val(p.act),
     };
+    const eta = parseFloat(MF.val(p.eta));          // Waze Travel Time: minutes of driving to home
+    o.eta = o.known && !o.home && eta > 0 ? eta : null;
     o.place = !o.known ? 'לא ידוע' : o.home ? 'בבית' : !o.away ? z
       : o.dir === 'towards' ? 'בדרך הביתה' : 'בחוץ';
     return o;

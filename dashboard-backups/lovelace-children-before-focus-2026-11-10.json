@@ -1,0 +1,18 @@
+{
+ "views": [
+  {
+   "title": "ילדים",
+   "path": "children",
+   "icon": "mdi:emoticon-happy",
+   "type": "panel",
+   "cards": [
+    {
+     "type": "iframe",
+     "url": "http://192.168.1.228:8080",
+     "aspect_ratio": "100%",
+     "title": "🌟 אפליקציות ילדים"
+    }
+   ]
+  }
+ ]
+}
